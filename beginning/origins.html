@@ -73,8 +73,9 @@
     <script>
         const histHold = document.getElementById('hist-hold');
 
-        var audio = new Audio('../audio/sweep.wav');
+        var audio = new Audio('../audio/page-move2.wav');
         audio.volume = 0.7;
+        audio.playbackRate = 2;
         histHold.addEventListener('mouseover', function (event) {
             if (event.target.closest('#hist-hold')) {
                 audio.play();
