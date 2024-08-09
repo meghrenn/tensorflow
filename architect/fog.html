@@ -1,0 +1,440 @@
+<html lang="en-CAN">
+
+<head>
+    <title>The Windy City</title>
+    <link rel="icon" type="image/png" href="">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/style.css">
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+    <script src="../js/scripts.js"></script>
+</head>
+<style>
+    #text-solution {
+        position: relative;
+        transform: translateX(-70%) translateY(-50vw) rotate(-10deg);
+        transition: 0.25s ease-in-out;
+        color: var(--dark);
+        font-size: 20px;
+        width: 270px;
+        z-index: 3;
+    }
+
+    .cloud {
+        position: absolute;
+        width: 100px;
+        height: 90px;
+        background-color: #ffffff;
+        opacity: 0.70;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 100%;
+        z-index: 2;
+        transition: opacity 2s ease;
+    }
+
+
+    .one {
+        top: 500px;
+        animation-duration: 60s;
+        left: 25vw;
+        rotate: 20deg;
+    }
+
+    .two {
+        top: 600px;
+        transform: scale(0.9);
+        left: 70vw;
+    }
+
+    .three {
+        top: 35vmin;
+        left: 50vw;
+        animation-duration: 60s;
+        transform: scale(1.1) rotate(223deg);
+    }
+
+    .four {
+        top: 300px;
+        left: 40vw;
+        animation-duration: 60s;
+        transform: scale(1.2) rotate(84deg);
+    }
+
+    .five {
+        top: 600px;
+        left: 80vw;
+        transform: scale(0.85) rotate(-40deg);
+    }
+
+    .cloud div {
+        position: absolute;
+        background: inherit;
+        height: 20vmin;
+        width: 20vmin;
+        background: white;
+        border-radius: 100%;
+    }
+
+    .cloud div:nth-child(1) {
+        translate: 0vmin 3vmin;
+    }
+
+    .cloud div:nth-child(2) {
+        translate: 15vmin 9vmin;
+        transform: scale(0.8);
+    }
+
+    .cloud div:nth-child(3) {
+        translate: 10vmin -6vmin;
+    }
+
+    .cloud div:nth-child(4) {
+        translate: 25vmin -1vmin;
+    }
+
+    .cloud div:nth-child(5) {
+        transform: scale(0.6) translateY(-80px);
+    }
+
+    .cloud div:nth-child(6) {
+        transform: scale(0.9);
+    }
+
+
+    #overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #ffffff;
+        opacity: 0.85;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        transform: translateX(-100%);
+        /* Initially off-screen to the left */
+        transition: transform 0.5s ease;
+        /* Add a smooth transform transition */
+    }
+
+    #overlay.active {
+        transform: translateX(0);
+        /* Slide in from the left when active */
+    }
+
+    #overlay img {
+        max-width: 100%;
+        max-height: 70%;
+    }
+
+    #overlay h1,
+    #overlay h2 {
+        color: #000000;
+        font-family: 'Comic Sans MS', sans-serif;
+    }
+
+    @media screen and (max-width: 500px) {
+        .cloud div {
+            position: absolute;
+            background: inherit;
+            height: 10vmin;
+            width: 10vmin;
+            background: white;
+            border-radius: 100%;
+        }
+
+
+        img {
+            max-width: 300px;
+            height: 300px;
+        }
+
+        #text-solution {
+            transform: translateX(1%) translateY(-390%) rotate(-10deg);
+        }
+    }
+</style>
+
+<body data-group-id="architect" data-page-id="fog">
+    <header id="main-header">
+        <ul>
+            <li id="about" class="basic-padding">About</li>
+            <li id="help" class="basic-padding">Trouble</li>
+            <li id="progress" class="basic-padding">Progress</li>
+        </ul>
+    </header>
+    <main class="thick-padding containment">
+        <h1>Fog</h1>
+        <div class="center-container">
+            <img id=image-solution class=image-solution src="../images/construction/bldg-plan2.png" alt="">
+            <p id="text-solution">What's this? It appears to be one of the initial sketches for the
+                campus....</p>
+        </div>
+        <div class="basic-padding above-the-clouds">
+
+            <p>It sure is <a class="egg" id="foggry">foggy</a> out.</p>
+            <p class="tangent">(Thoughts cloud over, incoherent.)</p>
+            <p>I must be the first person in Lethbridge to actually wish for <a class="button basic-padding"
+                    id="wind">wind</a>. I need a breeze to blow in and clear my head.</p>
+            <div id="overlay">
+                <img id="imageElement" src="../images/fog/foggry1.png" alt="A digital drawing of a crude-looking frog with gorgeous long legs,
+                wearing high heels. Art by Lauren Gulka (@lolo_doodles on Instagram).                   
+                    Don't worry, this has nothing to do with the game itself.">
+                <h1>Whuh-oh!!</h1>
+                <h2>⭐ 😎 You just got foggry'd! 😎 🌠 </h2>
+            </div>
+        </div>
+    </main>
+    <div id="header-container"></div>
+</body>
+<script>
+    document.getElementById('text-solution').style.opacity = '0';
+    document.body.style.backgroundColor = 'var(--darker)';
+
+    //Generating random clouds for the fog puzzle
+    function getRandomPosition() {
+        let x;
+        const viewportWidth = window.innerWidth;
+        x = Math.floor(Math.random() * ((viewportWidth / 1.4) - 60));
+        console.log(viewportWidth / 1.4);
+        const y = Math.floor(Math.random() * (window.innerHeight - 250));
+        return { x, y };
+    }
+
+    function getRandomClass() {
+        const classes = ['one', 'two', 'three', 'four', 'five'];
+        const randomIndex = Math.floor(Math.random() * classes.length);
+        return classes[randomIndex];
+    }
+
+    function createRandomClouds() {
+        for (let i = 0; i < 40; i++) {
+            const cloud = document.createElement('div');
+            cloud.className = `cloud ${getRandomClass()}`;
+
+            for (let i = 0; i < 6; i++) {
+                const cloudDot = document.createElement('div');
+                cloudDot.className = 'cloud-dot';
+                cloud.appendChild(cloudDot);
+            }
+
+            const position = getRandomPosition();
+            cloud.style.left = `${position.x}px`;
+            cloud.style.top = `${position.y}px`;
+
+            document.body.appendChild(cloud);
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', createRandomClouds);
+
+    //Allowing microphone access and detecting "wind"
+    let audioContext;
+    let analyser;
+    let microphoneStream;
+    let success = false;
+    async function initMicrophone() {
+        try {
+            const audioContextClass = window.AudioContext || window.webkitAudioContext;
+            audioContext = new audioContextClass();
+            analyser = audioContext.createAnalyser();
+
+            microphoneStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+            const microphoneSource = audioContext.createMediaStreamSource(microphoneStream);
+            microphoneSource.connect(analyser);
+            analyser.fftSize = 256;
+            detectBlow();
+        } catch (error) {
+            console.error('Error accessing microphone:', error);
+        }
+    }
+    function detectBlow() {
+        const dataArray = new Uint8Array(analyser.frequencyBinCount);
+        analyser.getByteFrequencyData(dataArray);
+        // Assuming a simple approach: if average frequency is high, user is blowing
+        const averageFrequency = Array.from(dataArray).reduce((acc, value) => acc + value, 0) / dataArray.length;
+        if (averageFrequency > 100) {
+            if (!success) {
+                moveCloudsOffScreen();
+                var audio = new Audio('../audio/whoosh.mp3');
+                audio.volume = 0.5;
+                audio.play();
+            }
+        }
+        requestAnimationFrame(detectBlow);
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        document.getElementById('image-solution').addEventListener("click", function () { //redirect to next page
+            if (success) {
+                window.location.href = "architect.html";
+            }
+        });
+
+        document.getElementById("wind").addEventListener('click', () => { //access microphone
+            if (!audioContext) {
+                initMicrophone();
+            }
+        });
+        //     //check if all clouds have gone
+        //     function checkCloudPositions() {
+        //         // Get the viewport dimensions
+        //         const viewportHeight = window.innerHeight;
+
+        //         // Select all elements with class "cloud"
+        //         const clouds = document.querySelectorAll('.cloud');
+
+
+        //         // Loop through each cloud element
+        //         clouds.forEach(function (cloud) {
+        //             // Get the bounding rectangle of the cloud element
+        //             const rect = cloud.getBoundingClientRect();
+
+        //             // Check if the bottom of the cloud element is above the top of the viewport
+        //             if (rect.bottom < 0 || rect.top > viewportHeight) {
+        //                 success = true;
+        //                 console.log("hooray!");
+        //                 const aboveTheClouds = document.querySelector('.above-the-clouds');
+
+        //                 // Remove all existing content
+        //                 aboveTheClouds.innerHTML = '';
+
+        //                 // Create a new paragraph element
+        //                 const newParagraph = document.createElement('p');
+        //                 newParagraph.textContent = 'Hooray';
+
+        //                 // Append the new paragraph to the element
+        //                 aboveTheClouds.appendChild(newParagraph);
+        //                 const explain = document.getElementById('explain');
+        //                 // Fade in the explanation by setting opacity to 1
+        //                 explain.style.opacity = '1';
+        //             }
+        //         });
+        //     }
+    });
+
+    document.getElementById("wind").addEventListener("click", function () { // Check cloud positions only if #wind has been clicked
+        if (!success) {
+            intervalId = setInterval(function () {
+                console.log("check");
+                checkClouds();
+            }, 3000);
+        }
+    });
+
+    function isInViewport(element) { // Check if an element is in the viewport
+        var rect = element.getBoundingClientRect();
+        return (
+            rect.top >= 0 &&
+            rect.left >= 0 &&
+            rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+            rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+        );
+    }
+
+    function checkClouds() { // Check if all clouds are off-screen
+        var clouds = document.querySelectorAll(".cloud");
+        var allOffScreen = true;
+
+        clouds.forEach(function (cloud) {
+            if (isInViewport(cloud)) {
+                allOffScreen = false;
+                return; // Exit loop early if any cloud is still in the viewport
+            }
+        });
+
+        if (allOffScreen) {
+            success = true;
+            console.log("success");
+            clearInterval(intervalId);
+
+            // stopMicrophone();
+            var clouds = document.querySelectorAll(".cloud");
+            clouds.forEach(function (cloud) {
+                cloud.style.opacity = "0";
+                setTimeout(function () {
+                    cloud.style.display = "none";
+                }, 2000);
+            });
+
+            document.getElementById('image-solution').classList.add("solved");
+            document.getElementById('text-solution').style.opacity = '';
+
+            document.body.style.backgroundColor = 'var(--green-dark)';
+            document.getElementById("main-header").style.backgroundColor = 'var(--green-medium)';
+            setTimeout(function () {
+                document.body.style.backgroundColor = '';
+                document.getElementById("main-header").style.backgroundColor = '';
+            }, 1000);
+        }
+    }
+
+    //MOVE THE CLOUDS:
+    //translateX is determined based on which half of the viewport the cloud is located
+    //translateY is determined based on which type of cloud it is
+    function moveCloudsOffScreen() {
+        const clouds = document.querySelectorAll('.cloud.one, .cloud.two, .cloud.three, .cloud.four, .cloud.five');
+        clouds.forEach((cloud) => {
+            const currentTransform = getComputedStyle(cloud).transform;
+            const cloudRect = cloud.getBoundingClientRect();
+            const cloudCenterX = cloudRect.left + cloudRect.width / 2;
+
+            // Adjust the translation based on the cloud's position in the viewport
+            const translationX = cloudCenterX > window.innerWidth / 2 ? 5 : -5;
+
+            // Extract translation values from the matrix transformation
+            const matrix = new DOMMatrix(currentTransform);
+            const currentTranslateX = matrix.m41 || 0;
+            const currentTranslateY = matrix.m42 || 0;
+
+            // Adjust the translation values based on the class
+            const translationY = cloud.classList.contains('one') ? -6 : cloud.classList.contains('two') ? 7 : cloud.classList.contains('three') ? -4 : cloud.classList.contains('four') ? 8 : -5;
+
+            cloud.style.transform = `translate(${currentTranslateX + translationX}px, ${currentTranslateY + translationY}px)`;
+        });
+    }
+
+    //FOGGRY EASTER EGG:
+    document.addEventListener('DOMContentLoaded', function () {
+        // Get the element with the id "foggry"
+        const foggryElement = document.getElementById("foggry");
+        const imageElement = document.getElementById("imageElement");
+
+        const imageUrls = ["../images/fog/foggry1.png", "../images/fog/foggry2.png", "../images/fog/foggry3.png"];
+        let currentImageIndex = 0;
+
+        // Add a hover event listener
+        foggryElement.addEventListener("mouseenter", function () {
+            // Change the text content when hovered
+            foggryElement.textContent = "foggry";
+        });
+
+        // Add a mouseleave event listener (optional, to revert the text when not hovered)
+        foggryElement.addEventListener("mouseleave", function () {
+            // Change the text content back when not hovered
+            foggryElement.textContent = "foggy";
+        });
+
+        foggryElement.addEventListener("click", function () {
+            // Toggle the 'active' class to slide in/out the overlay
+            document.getElementById("overlay").classList.toggle("active");
+
+
+            currentImageIndex = (currentImageIndex + 1) % imageUrls.length;
+            const newImageUrl = imageUrls[currentImageIndex];
+            imageElement.src = newImageUrl;
+
+            // Set a timeout to remove the 'active' class after 1 second
+            setTimeout(function () {
+                document.getElementById("overlay").classList.remove("active");
+            }, 2000);
+        });
+    });
+</script>
+
+</html>

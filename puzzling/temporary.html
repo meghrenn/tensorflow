@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en-CAN">
+
+<head>
+    <title>ATCO Trailers</title>
+    <link rel="icon" type="image/png" href="">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/style.css">
+    <!-- <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script> -->
+    <script src="../js/progress.js"></script>
+</head>
+<style>
+    * {
+        overflow-y: hidden;
+    }
+
+    body {
+        background-color: black;
+
+    }
+
+    .image-container {
+        width: 100vw;
+        height: 100vh;
+        /* Set width to 100% of the viewport width */
+        overflow-x: auto;
+        white-space: nowrap;
+        /* Prevent line breaks */
+        position: relative;
+    }
+
+    .image-container img {
+        display: block;
+        width: auto;
+        /* Prevent the image from being constrained by its container */
+        height: 100vh;
+    }
+
+    svg {
+        position: absolute;
+        z-index: 100;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+
+    path {
+        fill: none;
+        stroke: none;
+    }
+
+    p,
+    text {
+        color: rgb(255, 255, 255);
+        font-size: 5vw;
+    }
+
+    p {
+        position: relative;
+        z-index: 10;
+        white-space: wrap;
+    }
+
+    #hold-words {
+        position: relative;
+        max-width: 80vw;
+        height: auto;
+        overflow: hidden;
+        background-color: var(--lightest);
+    }
+
+    #progress-patch {
+        position: absolute;
+        background-color: transparent;
+        border-radius: 50%;
+        cursor: pointer;
+        z-index: 999;
+    }
+
+    @media screen and (orientation: landscape) {
+        .image-container img {
+            width: 100vw;
+            height: auto;
+        }
+
+        #hold-words {
+            max-width: 80vh;
+        }
+    }
+</style>
+
+<body class="medium" data-group-id="building" data-page-id="temporary">
+    <main class="right-container">
+        <div class="image-container">
+            <img id="trailers" src="../images/1967-atco-trailers.jpg">
+            <div id="progress-patch" onclick="window.location.href='../puzzling/puzzle.html'"></div>
+            <div id="hold-words" class="history basic-padding">
+                <!-- <h1 class="hold-words"><a href="../build/pesky.html">"Those Pesky Temporary Residences"</a></h1> -->
+                <p class="hold-words">"'There's one!'</p>
+                <p class="hold-words" style="left:20%">'There's another one!'</p>
+                <p class="hold-words">So went the enthusiastic refrain as we watched slices of the temporary
+                    buildings passing en route from the factory at Calgary through the streets of the city to their
+                    destination on campus, physical symbols of our prodigious efforts. Occasionally guarded sentiments
+                    were voiced that perhaps we should just keep them rolling on to a more aesthetic geographical
+                    setting such as Waterton, or even the Okanagan valley!" (Holmes, 1972, p. 92).</p>
+                <!-- <p class="hold-words">Why, what's wrong with Lethbridge?</p> -->
+            </div>
+            <svg id="svg">
+                <path id="path" d="M 25,45
+                A 50,35 0 1,1 125,45
+                A 50,35 0 1,1 25,45" />
+                <text>
+                    <textPath fill="black" alignment-baseline="top" xlink:href="#path">
+                        Hm, what's this?
+                    </textPath>
+                    <textPath fill="white" startOffset="0.5%" alignment-baseline="top" font-style="bold"
+                        xlink:href="#path">
+                        Hm, what's this?
+                    </textPath>
+                </text>
+            </svg>
+        </div>
+    </main>
+</body>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const pic = document.getElementById('trailers');
+        const progressPatch = document.getElementById('progress-patch');
+        const holdWords = document.getElementById('hold-words');
+        const svgElement = document.querySelector('svg');
+        const path = document.getElementById('path'); // Selecting the path element
+
+        const adjustPositions = () => { // Adjust positions based on pic dimensions
+            const picHeight = pic.offsetHeight;
+            const picWidth = pic.offsetWidth;
+
+            progressPatch.style.top = `${picHeight * 0.55}px`;
+            progressPatch.style.left = `${picWidth * 0.85}px`;
+            progressPatch.style.width = `${picWidth * 0.10}px`;
+            progressPatch.style.height = `${picHeight * 0.10}px`;
+
+            holdWords.style.top = `${picHeight * -0.95}px`;
+            holdWords.style.left = `${picHeight * 0.05}px`;
+
+            svgElement.style.width = `${picWidth}px`;
+            svgElement.style.height = `${picHeight}px`;
+            svgElement.setAttribute('viewBox', `${picHeight * -0.95} ${picHeight * -0.05} ${picWidth} ${picHeight}`);
+
+            // path.setAttribute('d', `M ${picWidth * 0.04},${picHeight * 0.015} 
+            //             A ${picWidth * 0.02}, ${picHeight * 0.03} 0  1, 1 ${picWidth * 0.03}, ${picHeight * 0.09} 
+            //             A ${picWidth * 0.1}, ${picHeight * 0.03} 0  1, 1 ${picWidth * 0.04}, ${picHeight * 0.09}`);
+            path.setAttribute('d', `M 0,${picHeight * 0.06} 
+                        A ${picWidth * 0.05},${picHeight * 0.05} 0 0 1 ${picWidth * 0.05},${picHeight * 0.2} `);
+            path.setAttribute('width', `${picHeight * 0.2}px`); // Setting width attribute
+            path.setAttribute('height', `${picHeight * 0.2}px`); // Setting height attribute
+            path.setAttribute('transform', `translate(${picHeight * 0.31}, ${picHeight * 0.46})`);
+
+        }
+        adjustPositions();
+        window.addEventListener('resize', adjustPositions);
+    });
+
+    screen.orientation.lock('portrait');
+</script>
+
+</html>

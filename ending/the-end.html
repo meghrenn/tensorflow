@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en-CAN">
+
+<head>
+    <title>I'taamaissko'taahkayo'p</title>
+    <link rel="icon" type="image/png" href="">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/style.css">
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+    <script src="../js/scripts.js"></script>
+</head>
+
+<style>
+    p {
+        opacity: 0;
+        transition: opacity 1s ease-in-out;
+    }
+
+    p.visible {
+        opacity: 1;
+    }
+</style>
+
+<body data-group-id="ending" data-page-id="the-end">
+    <header id="main-header">
+        <ul>
+            <li id="about" class="basic-padding">About</li>
+            <li id="help" class="basic-padding">Problems</li>
+            <li id="progress" class="basic-padding">Progress</li>
+        </ul>
+    </header>
+    <main class="thick-padding containment right-container">
+        <h1>The End</h1>
+        <p>This is the end of a long road.</p>
+        <p>There's one last light left on.</p>
+        <p>The motion sensors know nobody's home.</p>
+        <p>They click off.</p>
+        <p><a id="thanks" href="https://youtu.be/VTUBrLPspYI?si=LT3_XIdPWPvgj9hB">Thank you for playing.</a></p>
+    </main>
+    <div id="header-container"></div>
+</body>
+<script>
+    $(document).ready(function () {
+        const paragraphs = $('main p');
+        function fadeInParagraphs(index) {
+            if (index < paragraphs.length) {
+                paragraphs.eq(index).addClass('visible');
+                setTimeout(() => fadeInParagraphs(index + 1), 2000);
+            }
+        }
+        fadeInParagraphs(0);
+    });
+
+</script>
+
+</html>

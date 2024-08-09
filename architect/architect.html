@@ -1,0 +1,78 @@
+<html lang="en-CAN">
+
+<head>
+    <title>Arthur the Architect</title>
+    <link rel="icon" type="image/png" href="">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/style.css">
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+    <script src="../js/scripts.js"></script>
+</head>
+<style>
+    #text-solution {
+        transform: translateX(1%) translateY(-390%) rotate(-10deg);
+        color: var(--dark);
+        font-size: 20px;
+        width: 270px;
+        position: relative;
+        z-index: 3;
+        transition: 0.25s ease-in-out;
+    }
+</style>
+
+<body data-group-id="architect" data-page-id="architect">
+    <header id="main-header">
+        <ul>
+            <li id="about" class="basic-padding">About</li>
+            <li id="help" class="basic-padding">Trouble</li>
+            <li id="progress" class="basic-padding">Progress</li>
+        </ul>
+    </header>
+    <main class="thick-padding containment right-container">
+
+        <h1>Architect</h1>
+        <!-- <p class="eldritch-speak">Jack of most trades, master of none. Still, he remains <b
+                class="clue-text">Erick</b>’s own <b class="clue-text">son</b>.</p> -->
+
+        <p> Did we <a href="failure.html" target="_blank">offend his vision</a>?</p>
+
+
+        <p class="tangent">(Reality has a tendency to offend dreams and their dreamers.)</p>
+        <p> I heard he held a grudge. Never came back to campus, not even to receive his honourary degree.
+            But if he’s no longer here, let alone living, how can we reach him?</p>
+        <p class="tangent">(Words live on after the architect leaves.)</p>
+        <p>Go to <b>the place where he still speaks</b>. He may have <b>the last
+                word</b>, but you can borrow it for now.</p>
+        <form class="right-container" id="my-form">
+            <label for="file-pass" class="marginal-margin">Enter Password:</label>
+            <div class="marginal-margin">
+                <input type="text" style="color:rgb(0, 0, 0);" class="basic-padding" id="file-pass"
+                    placeholder="the last word" required>
+            </div>
+            <input class="button basic-padding marginal-margin" type="submit">
+        </form>
+        <div id="hint-parent" class="basic-padding">
+            <a style="display:none;" id="hint1" class="button basic-padding">help</a>
+            <a id="hint2" class="button basic-padding">help 1</a>
+            <a id="hint3" class="button basic-padding">help 2</a>
+            <!-- <a id="hint3" class="button basic-padding">help</a> -->
+        </div>
+        <div id="clue2" class="basic-padding marginal-margin hidden">
+            <p>(UHall calls you.)</p>
+        </div>
+
+
+        <div id="clue3" class="basic-padding marginal-margin hidden">
+            <p>You have a great view of the river from the sixth floor.</p>
+            <h1 class="above-the-clouds thick-padding">A B C ⭐ D E F G H I J K
+                L M N O P Q R S T U V W X Y Z</h1>
+        </div>
+        <!-- <div id="clue3" class="basic-padding marginal-margin hidden">
+            <p>On the sixth floor of UHall between blocks C and D, there is a window displaying a quote.</p>
+        </div> -->
+    </main>
+    <div id="header-container"></div>
+</body>
+
+</html>

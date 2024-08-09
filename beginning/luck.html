@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en-CAN">
+
+<head>
+    <title>Heads or Tails?</title>
+    <link rel="icon" type="image/png" href="">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/style.css">
+    <!-- <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script> -->
+    <script src="../js/scripts.js"></script>
+</head>
+
+<body data-group-id="beginning" data-page-id="luck">
+    <header id="main-header">
+        <ul>
+            <li id="about" class="basic-padding">About</li>
+            <li id="help" class="basic-padding">Trouble</li>
+            <li id="progress" class="basic-padding">Progress</li>
+        </ul>
+    </header>
+    <main class="thick-padding containment">
+        <h1>Luck</h1>
+        <p>Looks like you can take a hint and follow a clue; that's good to know. Now for the next step:</p>
+        <p> In the foyer of the LINC building there’s a statue of a <a
+                href="https://digitallibrary.uleth.ca/digital/collection/publications/id/29644/rec/3"
+                target="_blank">pronghorn</a>.</p>
+        <p class="tangent">(Some people say its name is Kevin.)</p>
+        <p>
+            Legend has it that you can pet it for good luck: the snout for exams and the rear for games. I recommend you
+            try either—neither is quite a match for our situation, but if this plot goes
+            as deep as I think it does, you’ll need all the luck you can get.</p>
+        <!-- <p> Take a photo of yourself performing this ritual then submit the file to me. That way I know you’re
+            committed. We can move forward from there.
+        </p> -->
+        <!-- <p> CONFIRM PROPER PETTING LOCATIONS FOR PRONGHORN; CHANGE TEXT ABOUT TAKING A PHOTO</p> -->
+
+        <!-- https://digitallibrary.uleth.ca/digital/collection/publications/id/29644/rec/3
+        Title
+        Features (December 04, 1972)
+        Subject
+        University of Lethbridge -- Periodicals
+        Description
+        A newsletter with University of Lethbridge campus news.
+        Creator
+        University of Lethbridge
+        Publisher
+        University of Lethbridge
+        Date.Original
+        1972-12-04
+        Type
+        Publication
+        Language
+        english
+        Permission for Digitization
+        The University of Lethbridge Archives has provided permission to host this document.
+        Resource Type
+        pdf
+        Collection
+        University of Lethbridge Publications
+        Open Access
+        Yes
+        Digital File Name
+        1972-12-04.pdf -->
+
+
+
+        <form class="center-container" id="luck-form">
+            <div class="basic-padding">
+                <label for="pronghorn-pet">Pet the pronghorn on the</label>
+                <div id="pronghorn-pet" style="display:flex; justify-content:space-evenly;">
+                    <input type="radio" id="head" name="pronghorn-pet-location" value="head">
+                    <label for="head">
+                        <h2>Head</h2>
+                    </label>
+                    <input type="radio" id="tail" name="pronghorn-pet-location" value="tail">
+                    <label for="tail">
+                        <h2>Tail</h2>
+                    </label>
+                </div>
+            </div>
+            <input class="button basic-padding" type="submit">
+        </form>
+    </main>
+    <div id="header-container"></div>
+</body>
+<script>
+    document.getElementById("luck-form").addEventListener("submit", function (event) {
+        event.preventDefault();
+        var selectedOption = document.querySelector('input[name="pronghorn-pet-location"]:checked');
+        var enteredPassword = selectedOption.value;
+        let choseTail = false;
+        if (selectedOption) {
+            if (enteredPassword === "head") {
+                choseTail = false;
+                localStorage.setItem('choseTail', choseTail);
+                document.body.style.backgroundColor = 'var(--green-dark)';
+                document.getElementById("main-header").style.backgroundColor = 'var(--green-medium)';
+                setTimeout(function () {
+                    document.body.style.backgroundColor = '';
+                    document.getElementById("main-header").style.backgroundColor = '';
+                    window.location.href = "head.html";
+                }, 700);
+            }
+            else {
+                if (enteredPassword === "tail") {
+                    choseTail = true;
+                    localStorage.setItem('choseTail', choseTail);
+                    document.body.style.backgroundColor = 'var(--green-dark)';
+                    document.getElementById("main-header").style.backgroundColor = 'var(--green-medium)';
+                    setTimeout(function () {
+                        document.body.style.backgroundColor = '';
+                        document.getElementById("main-header").style.backgroundColor = '';
+                        window.location.href = "tail.html";
+                    }, 700);
+                }
+            }
+        } else {
+            document.body.style.backgroundColor = 'var(--red-dark)';
+            document.getElementById("main-header").style.backgroundColor = 'var(--red-medium)';
+            setTimeout(function () {
+                alert("Trust me, we want luck on our side. Pet the pronghorn.");
+                document.body.style.backgroundColor = '';
+                document.getElementById("main-header").style.backgroundColor = '';
+            }, 500);
+        }
+    });
+</script>
+
+</html>

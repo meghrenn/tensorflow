@@ -1,0 +1,216 @@
+@font-face {
+    font-family: "AbscissaBold";
+    src: local('AbscissaBold'), url("../typefaces/Abscissa/AbscissaBold.ttf") format('truetype');
+    font-style: normal;
+    font-weight: bold;
+    /*Designer: Tepid Monkey https://www.1001freefonts.com/abscissa.font*/
+}
+
+/* (A) MATERIAL ICONS */
+
+
+.aWrap .svg-inline--fa {
+    color: #ffffff !important;
+}
+
+/* (B) WRAPPER */
+.aWrap {
+    /* font-family: Arial, Helvetica, sans-serif; */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    /* allow buttons to wrap into another row on small screens */
+    flex-wrap: wrap;
+    flex-direction: column;
+    width: 70vw;
+    padding: 10px 30px;
+    margin: 5px 0;
+    border-radius: 10px;
+    background: var(--red-dark);
+    gap: 1rem;
+    -webkit-box-shadow: 0px 5px 0px var(--medium) !important;
+    -moz-box-shadow: 0px 5px 0px var(--medium) !important;
+    -ms-box-shadow: 0px 5px 0px var(--medium) !important;
+    -o-box-shadow: 0px 5px 0px var(--medium) !important;
+    box-shadow: 0px 5px 0px var(--medium) !important;
+}
+
+.aWrap,
+.aWrap * {
+    box-sizing: border-box;
+}
+
+#bWrap {
+    display: flex;
+}
+
+.fa {
+    margin-bottom: 0;
+    width: 60px;
+}
+
+/* (C) PLAY/PAUSE BUTTON */
+/*Button css adapted from "Pure CSS Push Buttons" by Mohit Aneja https://codepen.io/cssjockey/pen/bGbmop*/
+#aPlay {
+    font-size: 1em;
+    font-family: 'AbscissaBold', 'Arial', sans-serif;
+    letter-spacing: 1px;
+    background-color: var(--red-medium);
+    border: 1px solid var(--red-medium);
+    -webkit-box-shadow: 0px 5px 0px var(--light) !important;
+    -moz-box-shadow: 0px 5px 0px var(--light) !important;
+    -ms-box-shadow: 0px 5px 0px var(--light) !important;
+    -o-box-shadow: 0px 5px 0px var(--light) !important;
+    box-shadow: 0px 5px 0px var(--light) !important;
+}
+
+#aPlay:hover {
+    border: 1px solid var(--red-light);
+    background-color: var(--red-light);
+    transition: 0.3s ease-in-out;
+    -webkit-box-shadow: 0px 5px 0px var(--red-medium) !important;
+    -moz-box-shadow: 0px 5px 0px var(--red-medium) !important;
+    -ms-box-shadow: 0px 5px 0px var(--red-medium) !important;
+    -o-box-shadow: 0px 5px 0px var(--red-medium) !important;
+    box-shadow: 0px 5px 0px var(--red-medium) !important;
+}
+
+#aPlay.active {
+    position: relative;
+    top: 5px;
+    background-color: var(--red-light);
+    -webkit-box-shadow: none !important;
+    -moz-box-shadow: none !important;
+    -ms-box-shadow: none !important;
+    -o-box-shadow: none !important;
+    box-shadow: none !important;
+    -webkit-transition: All 250ms ease;
+    -moz-transition: All 250ms ease;
+    -o-transition: All 250ms ease;
+    -ms-transition: All 250ms ease;
+    transition: All 250ms ease;
+}
+
+/* (D) TIME */
+.aCron {
+    margin: 0 10px;
+}
+
+/* (E) RANGE SLIDERS */
+/* (E1) HIDE DEFAULT */
+.aWrap input[type="range"] {
+    appearance: none;
+    border: none;
+    outline: none;
+    box-shadow: none;
+    width: 150px;
+    padding: 0;
+    margin: 0;
+    background: 0;
+}
+
+.range,
+.range-volume {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.range input,
+.range-volume input {
+    position: relative;
+    z-index: 1;
+}
+
+/* Present */
+.range .change-range,
+.range-volume .change-range {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 6px;
+    width: 0px;
+    background-color: var(--red-medium);
+    border-radius: 10px 0 0 10px;
+}
+
+.range-volume .change-range {
+    height: 10px;
+    width: 95%;
+}
+
+/* Absent */
+.under-ranger {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 6px;
+    width: 100%;
+    background-color: var(--light);
+    border-radius: 10px;
+}
+
+.range-volume .under-ranger {
+    height: 10px;
+}
+
+.aWrap input[type="range"]::-webkit-slider-thumb {
+    appearance: none;
+}
+
+/* (E2) CUSTOM SLIDER TRACK */
+.aWrap input[type="range"]::-webkit-slider-runnable-track {
+    background: transparent;
+    height: 6px;
+    border-radius: 10px;
+}
+
+/* (E3) CUSTOM SLIDER BUTTON */
+.aWrap input[type="range"]::-webkit-slider-thumb {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    border: 0;
+    background: var(--red-light);
+    position: relative;
+    cursor: pointer;
+    margin-top: -5px;
+}
+
+.aWrap input[type="range"]::-moz-range-thumb {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    border: 0;
+    background: var(--red-light);
+    position: relative;
+    cursor: pointer;
+    margin-top: -5px;
+}
+
+/* (F) VOLUME */
+.aVolIco {
+    margin: 0 10px;
+    cursor: pointer;
+}
+
+input.aVolume {
+    width: 100px !important;
+}
+
+.aVolume::-webkit-slider-runnable-track {
+    height: 10px !important;
+}
+
+.aVolume::-webkit-slider-thumb {
+    margin-top: -3px !important;
+}
+
+.aVolume::-moz-range-thumb {
+    margin-top: -3px !important;
+}
+
+.volume-container {
+    display: flex;
+    align-items: center;
+}

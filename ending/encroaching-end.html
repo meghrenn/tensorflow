@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en-CAN">
+
+<head>
+    <title></title>
+    <link rel="icon" type="image/png" href="">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/style.css">
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+    <script src="../js/scripts.js"></script>
+</head>
+<style>
+    main {
+        min-width: 350px;
+    }
+
+    #poem {
+        display: block;
+        white-space: pre-line;
+    }
+
+    #poem p,
+    #poem a {
+        margin-bottom: 0;
+    }
+
+    #my-form {
+        opacity: 0;
+        transition: opacity 2s ease;
+    }
+</style>
+
+<body data-group-id="ending" data-page-id="encroaching-end">
+    <header id="main-header">
+        <ul>
+            <li id="about" class="basic-padding">About</li>
+            <li id="help" class="basic-padding">Problems</li>
+            <li id="progress" class="basic-padding">Progress</li>
+        </ul>
+    </header>
+    <main class="thick-padding containment right-container">
+        <h1>The Encroaching End</h1>
+        <div id="poem">
+            <p><a class="clue-text">A</a>n opening providing hope</p>
+            <p><a class="clue-text">P</a>erspective shift ‘twixt asymptotes</p>
+            <p><a class="clue-text">E</a>schew pedantic pleas for proof </p>
+            <p><a class="clue-text">R</a>eject the real to find the truth </p>
+            <p><a class="clue-text">T</a>he threat necessitates abatement </p>
+            <p><a class="clue-text">U</a>ntil then we can’t escape it</p>
+            <p><a class="clue-text">R</a>eady to confront it, friend?</p>
+            <p>you’ve passed the past, now comes</p>
+            <p>the <a class="clue-text">E</a>nd.</p>
+        </div>
+        <form class="right-container" id="my-form">
+            <label for="file-pass" class="marginal-margin"></label>
+            <div class="marginal-margin">
+                <input type="text" style="color:rgb(0, 0, 0);" class="basic-padding" id="file-pass"
+                    placeholder="_ _ _ _ _ _ _ _" required>
+            </div>
+            <input class="button basic-padding marginal-margin" type="submit">
+        </form>
+
+        <!-- <div id="hint-parent" class="basic-padding">
+            <a style="display:none;" id="hint1" class="button basic-padding">help</a>
+            <a id="hint2" class="button basic-padding">help</a>
+        </div> -->
+
+
+    </main>
+    <div id="header-container"></div>
+    <script>
+        // Function to simulate typing effect
+        function typeText(element, text, speed) {
+            let index = 0;
+            const intervalId = setInterval(function () {
+                element.innerHTML += text[index++];
+                if (index === text.length) {
+                    clearInterval(intervalId);
+                }
+            }, speed);
+        }
+
+        // Call typeText when the page loads
+        window.addEventListener("load", function () {
+            const poemElement = document.getElementById("poem");
+            const paragraphs = poemElement.querySelectorAll("p");
+            poemElement.innerHTML = ""; // Clear the content
+
+            paragraphs.forEach((paragraph, index) => {
+                setTimeout(function () {
+                    typeText(poemElement, paragraph.textContent, 50); // Adjust speed as needed
+                    poemElement.innerHTML += "<br>"; // Add line break after each paragraph
+                }, index * 2000); // Adjust delay between paragraphs as needed
+
+                // Check if it's the last paragraph
+                if (index === paragraphs.length - 1) {
+                    setTimeout(function () {
+                        // Replace content of #poem with the original HTML structure
+                        document.getElementById("my-form").style.opacity = '1';
+                        poemElement.innerHTML = `
+                        <a class="clue-text">A</a>n opening providing hope
+                            <a class="clue-text">P</a>erspective shift ‘twixt asymptotes
+                            <a class="clue-text">E</a>schew pedantic pleas for proof
+                            <a class="clue-text">R</a>eject the real to find the truth 
+                            <a class="clue-text">T</a>he threat necessitates abatement
+                            <a class="clue-text">U</a>ntil then we can’t escape it
+                            <a class="clue-text">R</a>eady to confront it, friend?
+                            you’ve passed the past, now comes
+                            the <a class="clue-text">E</a>nd.
+                        `;
+                    }, index * 2000 + 1000); // Set delay after typing animation
+
+                }
+            });
+        });
+    </script>
+</body>

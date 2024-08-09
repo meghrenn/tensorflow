@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en-CAN">
+
+<head>
+    <title>Unearthed!</title>
+    <link rel="icon" type="image/png" href="">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/style.css">
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+    <script src="../js/scripts.js"></script>
+</head>
+<style>
+    /* #text {
+      
+        transform: translateX(1%) translateY(-390%) rotate(-10deg); 
+        transition: 0.25s ease -in -out;
+        color: var(--dark);
+        font-size: 20px;
+        width: 270px;
+    } */
+
+    #text-solution {
+        position: relative;
+        z-index: 3;
+        transition: 0.25s ease-in-out;
+    }
+
+    #earth {
+        position: fixed;
+        display: block;
+        top: 0;
+        /* left: 0; */
+        object-fit: fill;
+        z-index: 3;
+        pointer-events: none;
+        transition: opacity 2s ease;
+        /* This ensures that pointer events (like touch) pass through the earth image */
+    }
+</style>
+
+<body class="medium" data-group-id="meliorist" data-page-id="unearthed">
+    <header class="medium" id="main-header">
+        <!-- <ul>
+            <li id="about" class="basic-padding">About</li>
+            <li id="help" class="basic-padding">Trouble</li>
+            <li id="progress" class="basic-padding">Progress</li>
+        </ul> -->
+    </header>
+    <main class="thick-padding containment">
+        <!-- <h1>Unearthed</h1> -->
+
+        <div id="text-solution">
+            <p><a id="unearth-story">The prophet of
+                    doom proclaimed: "This is only the beginning."</a> Then the U of L settled down, resting
+                between the coulees and on its laurels.</p>
+            <p>(The innocuous tragedy of a dream [slipping/surging] into dissolution.)</p>
+            <p>Indeed, it is [y]our university. Will you fight for it?</p>
+            <!-- <p>They’re onto us. I need to create a better means to send these clues to you. I need to <a
+                    class="clue-text">innovate</a>, go bigger: wider, higher, deeper. <a class="clue-text">Additive
+                    manufacturing</a> of complexity.
+                And you’re going to need help.</p>
+
+            <p> Here’s your next clue. First you need to see it, then you need to find it. </p>
+            <a class="button basic-padding" id="commit">commit</a> -->
+            <p>You're excited to unearth answers, aren't you? You have no clue how much can be found by covering up.
+                Sometimes you need obfuscation to truly bring things to the surface. </p>
+
+
+            <p>Take this with you. You'll need it later, but it only works for innovators. Get into the zone to figure
+                this out.</p>
+    </main>
+    <div id="about-page" class="pop-up thick-padding">
+        <div class="wrap-pad">
+            <h2>What This Is</h2>
+            <p>You may be confused. You may be wondering what you have stumbled upon. You may have questions. What
+                is this thing, anyway?</p>
+            <p>Reality is subjective. For me, this is my cry into the void, my hoping for an echo. These are my
+                memories
+                and my
+                nightmares. This is my attempt against entropy and the forces that seek to destroy this institution.
+            </p>
+            <p>For you, this is a game, a quest, a puzzle. An opportunity to learn, perhaps? A chance to save the
+                school.</p>
+            <h2>Playing the Game</h2>
+            <p>I have developed this interface as a secure way to pass clues and messages onto you with minimal
+                antagonistic
+                interference. You will have to work through a number of tasks and problems to reach the goal. If you
+                become
+                stuck, let me know, and I may be able to help further; however, you will also need to seek help from
+                other
+                sources. Consider the entities around you who may be of use.
+            </p>
+            <h3>My Promises to You</h3>
+            <ol>
+                <li>You will not have to break the law, spend money, .</li>
+                <li></li>
+                <li>Things May Go Wrong. If this happens, alert me to it, and I will see what strings I can pull to
+                    make
+                    them
+                    right again.</li>
+            </ol>
+            <h2>Who I Am</h2>
+            <p>Who am I? Good question--one I often ask, myself. Like all entities, I am not so much an object as I
+                am a process; I am built up and down; I am compacted, quickly. I am not myself for very long before
+                I am
+                something new. I am prone to digression, in my words and in my being.</p>
+            <p>For this moment, I am a guide. I cannot solve the problems for you but I can help you navigate
+                them. ontinue the game and I can tell you more.</p>
+        </div>
+        <div class="close-button button basic-padding">Close</div>
+    </div>
+    <div id="help-page" class="pop-up thick-padding">
+        <div class="wrap-pad">
+            <h2>Things Go Wrong</h2>
+            <p>Nefarious forces seek to impede your progress. They may interfere with our work in the form of errors
+                on
+                this web
+                application, alteration or destruction of physical clues, or any number of other problems. If you
+                believe that
+                something has gone terribly wrong, preventing you from continuing on your quest, please report it to
+                me
+                and I
+                will take hasty action to resolve it. </p>
+            <p>
+                In simpler terms, if something in this game breaks, report the problem by contacting [TECHNICAL
+                SUPPORT].
+            </p>
+        </div>
+        <div class="close-button button basic-padding">Close</div>
+    </div>
+    <div id="progress-page" class="pop-up thick-padding">
+        <div class="wrap-pad">
+            <h2>Progress</h2>
+            <p>
+                In simpler terms, if something in this game breaks, report the problem by contacting [TECHNICAL
+                SUPPORT].
+            </p>
+        </div>
+        <div class="close-button button basic-padding">Close</div>
+    </div>
+</body>
+<script>
+    screen.orientation.lock('portrait');
+
+    document.body.style.backgroundColor = 'var(--darker)';
+    document.getElementById('text-solution').style.opacity = '0.1';
+
+    let erasedPixels = 0;
+    const earth = document.createElement('canvas');
+    earth.id = 'earth';
+    let isTouchingCanvas = false;
+    let diggingsDone = false;
+
+    // <h2 src="https://www.hplovecraft.com/writings/texts/fiction/sh.aspx">
+
+    // Set canvas dimensions to fit the viewport
+    earth.width = window.innerWidth;
+    earth.height = window.innerHeight;
+    var maxWidth = earth.width - 150;
+    // earth.style.marginTop = "93px;"; //why isnt this working???
+    document.body.appendChild(earth); // Append the canvas element to the document body
+
+    const ctx = earth.getContext('2d'); // Get the 2D rendering context for the canvas
+    ctx.willReadFrequently = true;
+
+    var fontSize = 30;
+    ctx.font = fontSize + "px 'Abscissa'";
+    var lineHeight = fontSize + 5;
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    var text = "“As I turned up the stinking black earth... I trembled at the dubious thoughts of what I might uncover. Some secrets of inner earth are not good for mankind, and this seemed to me one of them.”"
+
+    // Function to draw wrapped text
+    function wrapText(text, x, y, maxWidth, lineHeight) {
+        var words = text.split(' ');
+        var line = '';
+        var offsetY = 0;
+        for (var i = 0; i < words.length; i++) {
+            var testLine = line + words[i] + ' ';
+            var metrics = ctx.measureText(testLine);
+            var testWidth = metrics.width;
+            if (testWidth > maxWidth && i > 0) {
+                ctx.fillText(line, x, y + offsetY);
+                line = words[i] + ' ';
+                offsetY += lineHeight;
+            }
+            else {
+                line = testLine;
+            }
+        }
+        ctx.fillText(line, x, y + offsetY);
+    }
+
+
+    document.addEventListener("DOMContentLoaded", function () {
+        // document.getElementById('commit').addEventListener("click", function () {
+        //     if (diggingsDone) {
+        //         puzzleSolved = true; // Set puzzleSolved to TRUE when the correct password is entered
+        //         document.body.style.backgroundColor = 'var(--green-dark)';
+        //         document.getElementById("main-header").style.backgroundColor = 'var(--green-medium)';
+        //         setTimeout(function () {
+        //             document.body.style.backgroundColor = '';
+        //             document.getElementById("main-header").style.backgroundColor = '';
+        //             window.location.href = "logo.html";
+        //         }, 700);
+        //     }
+        // });
+
+        function hexToRGBA(hex, opacity) {
+            // Remove '#' if present
+            hex = hex.replace('#', '');
+
+            // Parse RGB components
+            const r = parseInt(hex.substring(0, 2), 16);
+            const g = parseInt(hex.substring(2, 4), 16);
+            const b = parseInt(hex.substring(4, 6), 16);
+
+            // Return rgba format
+            return `rgba(${r}, ${g}, ${b}, ${opacity})`;
+        }
+
+        // 1) Fill #earth with a rectangle that completely covers the element
+        ctx.fillStyle = '#31273c';
+        ctx.fillRect(0, 0, earth.width, earth.height);
+
+        // 2) Cover the brown rectangle with squiggly lines colored darker brown
+        // Convert hexadecimal color code to rgba format with opacity
+        // Convert hex color to rgba format
+        // const hexColor = '#5F4B8B'; // Example hex color code (darker brown)
+        // const opacity = 0.5; // Opacity value between 0 and 1
+        ctx.strokeStyle = hexToRGBA('#413450', 0.5);
+
+        // ctx.lineWidth = 5; // Set line width
+        ctx.lineCap = 'round'; // Set line cap to round
+        ctx.lineJoin = 'round'; // Set line join to round
+
+        for (let i = 0; i < (earth.width / 4); i++) {
+            ctx.beginPath();
+            let startX = Math.random() * earth.width;
+            let startY = Math.random() * earth.height;
+            ctx.moveTo(startX, startY);
+
+            // Generate a series of random points to create the squiggly line
+            for (let j = 0; j < 40; j++) {
+                const newX = startX + Math.random() * 40 - 20; // Random x-coordinate within 20 units of startX
+                const newY = startY + Math.random() * 40 - 20; // Random y-coordinate within 20 units of startY
+
+                // Ensure that the new point is within the canvas bounds
+                startX = Math.max(0, Math.min(earth.width, newX));
+                startY = Math.max(0, Math.min(earth.height, newY));
+
+                //Vary stroke width
+                const strokeWidth = Math.random() * 4 + 2;
+                ctx.lineWidth = strokeWidth;
+
+                ctx.lineTo(startX, startY);
+            }
+
+            ctx.stroke();
+        }
+        // // 3) Draw gray lopsided circles sporadically over the rectangle with rough borders
+        // ctx.strokeStyle = '#3c4842';
+        // ctx.fillStyle = '#6c7771';
+        // ctx.lineWidth = 3; // Set line width
+        // ctx.lineCap = 'round'; // Set line cap to round
+        // ctx.lineJoin = 'round'; // Set line join to round
+
+        // for (let i = 0; i < 20; i++) {
+        //     const x = Math.random() * earth.width;
+        //     const y = Math.random() * earth.height;
+        //     const radius = 2 + Math.random() * 5; // Random radius between 2 and 7
+
+        //     ctx.beginPath();
+        //     // Draw a series of short lines around the perimeter of the circle to create a rough border
+        //     for (let angle = 0; angle < Math.PI * 2; angle += Math.PI / 36) {
+        //         const xOffset = Math.cos(angle) * radius * (0.8 + Math.random() * 0.4); // Randomly vary the distance from the center
+        //         const yOffset = Math.sin(angle) * radius * (0.8 + Math.random() * 0.4); // Randomly vary the distance from the center
+        //         ctx.lineTo(x + xOffset, y + yOffset);
+        //     }
+        //     ctx.closePath();
+        //     ctx.stroke();
+        //     ctx.fill();
+        // }
+
+        // // // 4) Draw a scattering of fallen leaves with different rotations
+        // // ctx.fillStyle = '#88a882'; // Set fill style for leaves
+
+        // // for (let i = 0; i < 30; i++) {
+        // //     const x = Math.random() * earth.width;
+        // //     const y = Math.random() * earth.height;
+        // //     const size = 5 + Math.random() * 10; // Random leaf size
+        // //     const rotation = Math.random() * Math.PI * 2; // Random rotation angle
+
+        // //     ctx.save(); // Save the current canvas state
+        // //     ctx.translate(x, y); // Translate to leaf position
+        // //     ctx.rotate(rotation); // Rotate the canvas
+        // //     ctx.translate(-x, -y); // Translate back to original position
+
+        // //     ctx.beginPath();
+        // //     ctx.moveTo(x, y);
+
+        // //     // Draw a bezier curve to represent the leaf shape
+        // //     ctx.bezierCurveTo(x - size / 2, y - size / 2, x - size / 4, y + size / 2, x, y + size * 2);
+        // //     ctx.bezierCurveTo(x + size / 4, y + size / 2, x + size / 2, y - size / 2, x, y);
+
+        // //     ctx.fill(); // Fill the leaf shape
+
+        // //     ctx.restore(); // Restore the saved canvas state
+        // // }
+
+        // 5) Cover the brown rectangle with scattered lines resembling pine needles
+        ctx.strokeStyle = hexToRGBA('#4C405C', 0.8);
+        ctx.fillStyle = hexToRGBA('#4C405C', 0.8);
+        ctx.lineWidth = 3; // Set line width
+
+        for (let i = 0; i < 100; i++) {
+            const startX = Math.random() * earth.width;
+            const startY = Math.random() * earth.height;
+            const length = Math.random() * 10 + 5; // Random length between 5 and 15
+
+            // Generate a series of points to define the shape of the pine needle
+            const points = [];
+            points.push({ x: startX, y: startY });
+            for (let j = 1; j <= 10; j++) {
+                const angle = Math.random() * Math.PI - Math.PI / 2; // Random angle between -π/2 and π/2
+                const x = startX + Math.cos(angle) * (length - (length * j) / 10); // Gradually decrease x-coordinate
+                const y = startY + Math.sin(angle) * (length - (length * j) / 10); // Gradually decrease y-coordinate
+                points.push({ x, y });
+            }
+
+            // Draw the pine needle shape
+            ctx.beginPath();
+            ctx.moveTo(points[0].x, points[0].y);
+            for (let k = 1; k < points.length; k++) {
+                ctx.lineTo(points[k].x, points[k].y);
+            }
+            ctx.closePath(); // Close the path to create a closed shape
+            ctx.fill(); // Fill the shape
+            ctx.stroke(); // Stroke the shape
+        }
+        //6. TEXT
+        ctx.fillStyle = "#ffffff";
+        wrapText(text, earth.width / 2, earth.height / 4, maxWidth, lineHeight);
+    });
+
+    document.addEventListener('click', handleMove);
+    document.addEventListener('touchmove', handleMove);
+
+    function handleMove(event) {
+        // event.preventDefault(); // Prevent default touch action (like scrolling)
+        const rect = earth.getBoundingClientRect();
+        const mouseX = event.clientX - rect.left;
+        const mouseY = event.clientY - rect.top;
+        const radius = 60; // Radius of the circular erasing area
+
+        for (let x = 0; x < rect.width; x++) {
+            for (let y = 0; y < rect.height; y++) {
+                const distance = Math.sqrt((x - mouseX) ** 2 + (y - mouseY) ** 2); // Distance from mouse coordinates
+
+                if (distance <= radius) {
+                    const pixel = ctx.getImageData(x, y, 1, 1); // Get pixel data at current coordinates
+                    if (pixel.data[3] !== 0) { // Check if the pixel is visible (not fully transparent)
+                        ctx.clearRect(x, y, 1, 1); // Erase the pixel
+                        erasedPixels++;
+                    }
+                }
+            }
+        }
+
+        // Play random audio clip
+        const randomClipNumber = Math.floor(Math.random() * 5) + 1; // Generate random number between 1 and 5
+        const audio = new Audio(`../audio/dirt${randomClipNumber}.mp3`); // Construct path to random audio clip
+        if (!diggingsDone) {
+            audio.play();
+        }
+        if (erasedPixels >= 0.75 * (rect.width * rect.height)) { // Check if at least 75% of pixels are erased
+            diggingsDone = true;
+            earth.style.opacity = '0';
+            document.getElementById('text-solution').style.opacity = '';
+            document.getElementById('image-solution').classList.add("solved");
+        }
+    }
+
+    document.getElementById("unearth-story").addEventListener("click", function () {
+        if (diggingsDone) {
+            window.location.href = "https://digitallibrary.uleth.ca/digital/collection/publications/id/6797/rec/26";
+        }
+    });
+
+</script>
+
+</html>

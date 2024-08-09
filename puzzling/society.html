@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en-CAN">
+
+<head>
+    <title>(Literally 1984)</title>
+    <link rel="icon" type="image/png" href="">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/style.css">
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+    <script src="../js/scripts.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"></script>
+
+</head>
+<style>
+    .draggable {
+        font-family: 'AbscissaBold', 'Arial', sans-serif;
+        font-size: 24px;
+        user-select: none;
+        cursor: move;
+        background: var(--red-dark);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 4rem;
+        margin-bottom: 10px;
+        z-index: 1;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.5);
+        transition: 0.5s ease-in-out;
+    }
+
+    .drag {
+        position: fixed;
+        box-shadow: 0 8px 12px rgba(0, 0, 0, 0.16);
+    }
+
+    .placeholder {
+        margin-bottom: 10px;
+        height: 4px;
+        margin-top: -14px;
+        /* default space + placeholder height */
+        transform: translateY(7px);
+        /* placeholder margin-top / 2 */
+        background-color: deeppink;
+        border-radius: 2px;
+    }
+</style>
+
+<body data-group-id="puzzling" data-page-id="society">
+    <header id="main-header">
+        <ul>
+            <li id="about" class="basic-padding">About</li>
+            <li id="help" class="basic-padding">Problems</li>
+            <li id="progress" class="basic-padding">Progress</li>
+        </ul>
+    </header>
+    <main class="thick-padding containment">
+        <h1>Society</h1>
+        <p>Oh, I recognize this. <a href="https://www.ulethbridge.ca/unews/article/beetle-mystery-finally-solved"
+                target="_blank">It was a prank some students pulled, years ago.</a> It wouldn't have been <a class="egg"
+                href="" target="_blank">the first incident of vehicular tomfoolery</a> at the institution.
+        </p>
+        <img class="marginal-margin" src="../images/bug/vw-bug1.png">
+        <p>If you look carefully, you can even
+            see a word spray-painted on the bug's roof.</p>
+        <img class="marginal-margin" src="../images/bug/vw-bug2.png">
+        <p class="tangent">(This says <s>a lot about</s> society.)</p>
+        <p>What else might it say?</p>
+        <div class="wrap">
+            <div id="list">
+                <div class="draggable">S</div>
+                <div class="draggable">O</div>
+                <div class="draggable">C</div>
+                <div class="draggable">I</div>
+                <div class="draggable">E</div>
+                <div class="draggable">T</div>
+                <div class="draggable">Y</div>
+            </div>
+        </div>
+    </main>
+    <div id="header-container"></div>
+</body>
+<script>
+    // https://codepen.io/plancktime_/pen/rNzjWVm
+    document.addEventListener('DOMContentLoaded', function () {
+        const list = document.getElementById('list');
+        let dragEle;
+        let cloneEle;
+        let placeholder;
+        let isDraggingStarted = false;
+
+        let x = 0;
+        let y = 0;
+
+        const swap = function (nodeA, nodeB) {
+            const parentA = nodeA.parentNode;
+            const siblingA = nodeA.nextSibling === nodeB ? nodeA : nodeA.nextSibling;
+            nodeB.parentNode.insertBefore(nodeA, nodeB);
+            parentA.insertBefore(nodeB, siblingA);
+        };
+
+        const isAbove = function (nodeA, nodeB) {
+            const rectA = nodeA.getBoundingClientRect();
+            const rectB = nodeB.getBoundingClientRect();
+            return rectA.top + rectA.height / 2 < rectB.top + rectB.height / 2;
+        };
+
+        const mouseDownHandler = function (e) {
+            if (e.button == 0) {
+                document.addEventListener('mousemove', mouseMoveHandler);
+                document.addEventListener('mouseup', mouseUpHandler);
+            }
+        };
+
+        const mouseMoveHandler = function (e) {
+
+            if (!isDraggingStarted) {
+                dragEle = e.target.closest('.draggable');
+                cloneEle = dragEle.cloneNode(true);
+                cloneEle.classList.add('opacity');
+                dragEle.classList.add('drag');
+                const draggingRect = dragEle.getBoundingClientRect();
+
+                isDraggingStarted = true;
+
+                dragEle.insertAdjacentElement('afterend', cloneEle);
+                const rect = dragEle.getBoundingClientRect();
+                x = e.pageX - rect.left + window.scrollX;
+                y = e.pageY - rect.top + window.scrollY;
+
+                placeholder = document.createElement('div');
+                placeholder.classList.add('placeholder');
+                dragEle.parentNode.insertBefore(placeholder, dragEle.nextSibling);
+            }
+
+            dragEle.style.top = `${e.pageY - y}px`;
+            dragEle.style.left = `${e.pageX - x}px`;
+
+            const prevEle = dragEle.previousElementSibling;
+            const nextEle = placeholder.nextElementSibling;
+
+            if (prevEle && isAbove(dragEle, prevEle)) {
+                swap(placeholder, dragEle);
+                swap(placeholder, prevEle);
+                return;
+            }
+
+            if (nextEle && isAbove(nextEle, dragEle)) {
+                swap(nextEle, placeholder);
+                swap(nextEle, dragEle);
+            }
+        };
+
+        const mouseUpHandler = function () {
+            document.removeEventListener('mousemove', mouseMoveHandler);
+            document.removeEventListener('mouseup', mouseUpHandler);
+
+            placeholder && placeholder.parentNode.removeChild(placeholder);
+            cloneEle && cloneEle.parentNode.removeChild(cloneEle);
+
+            dragEle.style.removeProperty('top');
+            dragEle.style.removeProperty('left');
+            dragEle.style.removeProperty('position');
+            dragEle.classList.remove('drag');
+
+            x = null;
+            y = null;
+            dragEle = null;
+            cloneEle = null;
+            isDraggingStarted = false;
+
+        };
+
+        [].slice.call(list.querySelectorAll('.draggable')).forEach(function (item) {
+            item.addEventListener('mousedown', mouseDownHandler);
+        });
+    });
+
+    // Get the container element
+    const list = document.getElementById('list');
+
+
+
+    new Sortable(list, {
+        onStart: function (evt) {
+            // Add border color to the element being dragged
+            evt.item.style.border = "6px solid var(--red-medium)";
+        },
+        onEnd: function (evt) {
+            const draggableElements = document.querySelectorAll('.draggable');
+            const text = Array.from(list.children).map(child => child.textContent).join('');
+
+
+            evt.item.style.border = "";
+
+            // Reset border color for all elements
+            draggableElements.forEach(element => {
+                element.style.borderColor = '';
+            });
+            if (text === "COYSITE") {
+                var audio = new Audio('../audio/click2.mp3');
+                audio.volume = 0.7;
+                audio.play();
+                // Iterate over each draggable element
+                draggableElements.forEach(element => {
+                    // Change background color temporarily
+                    element.style.backgroundColor = 'var(--green-light)';
+                    element.style.color = 'var(--dark)';
+                    // Set timeout to revert the color change
+                    setTimeout(function () {
+                        element.style.backgroundColor = '';
+                        element.style.color = '';
+                        window.location.href = "coy-site.html";
+                    }, 1000);
+                });
+            } else {
+                var audio = new Audio('../audio/click1.mp3');
+                audio.volume = 0.7;
+                audio.play();
+                draggableElements.forEach(element => {
+                    element.style.backgroundColor = 'var(--red-light)';
+                    setTimeout(function () {
+                        element.style.backgroundColor = '';
+                    }, 400);
+                });
+            }
+            console.log(text);
+        }
+    });
+</script>
+
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en-CAN">
+
+<head>
+    <title>Oki</title>
+    <link rel="icon" type="image/png" href="">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/style.css">
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+    <script src="../js/scripts.js"></script>
+</head>
+
+<body data-group-id="beginning" data-page-id="explanation">
+    <header id="main-header">
+        <ul>
+            <li id="about" class="basic-padding">About</li>
+            <li id="help" class="basic-padding">Trouble</li>
+            <li id="progress" class="basic-padding">Progress</li>
+        </ul>
+    </header>
+    <main class="thick-padding containment">
+        <h1>Explanation</h1>
+        <p>Greetings, stranger.</p>
+
+        <p class="tangent">(Prospective skeptic peering at this puzzle;
+            member of the public,
+            bystander to the conspiracy—
+            potential project participant?)
+        </p>
+        <p>It seems you’ve stumbled into something much bigger than yourself. You’re wondering what all this means and
+            I’m inclined to explain it to you. Despite your promising show of curiosity, however, I can’t let you into
+            this quest
+            quite yet. First, I need to know if I can trust you.</p>
+        <p class="tangent">(Can you trust this? Trust a stranger to be your guide, your narrator, your facilitator… a
+            comrade against the conspiracy?) </p>
+        <p>Let’s head back to the beginning; it’s where most people prefer to get their start.
+        </p>
+        <div class="center-container basic-padding marginal-margin">
+            <div id="continue" class="button basic-padding">Begin</div>
+        </div>
+    </main>
+    <div id="header-container"></div>
+</body>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        document.getElementById("continue").addEventListener("click", function () {
+            document.body.style.backgroundColor = 'var(--green-dark)';
+            document.getElementById("main-header").style.backgroundColor = 'var(--green-medium)';
+            setTimeout(function () {
+                document.body.style.backgroundColor = '';
+                document.getElementById("main-header").style.backgroundColor = '';
+                window.location.href = "../beginning/initiation.html";
+            }, 700);
+        });
+    });
+</script>
+
+</html>

@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en-CAN">
+
+<head>
+    <title>Look, a Logo!</title>
+    <link rel="icon" type="image/png" href="">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/style.css">
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+    <script src="../js/scripts.js"></script>
+</head>
+<style>
+    #light,
+    #dark {
+        width: 90vw;
+        height: 90vw;
+        transition: opacity 10s ease;
+        display: inline;
+        position: fixed;
+        top: 20%;
+        left: 5%;
+    }
+
+    #light {
+        opacity: 1;
+    }
+
+    #dark {
+        z-index: 7;
+        opacity: 0;
+    }
+
+    #overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        background-color: black;
+        opacity: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        transition: opacity 6s ease;
+        z-index: 5;
+    }
+
+    #eldritch-speak {
+        position: relative;
+        top: 70vh;
+        text-align: center;
+    }
+
+    @media screen and (min-width: 500px) {
+
+        #light,
+        #dark {
+            width: 200px;
+            height: 200px;
+            transition: opacity 10s ease;
+            display: inline;
+            position: fixed;
+            top: 20%;
+            left: 20%;
+        }
+    }
+</style>
+
+<body data-group-id="monster" data-page-id="logo">
+    <header id="main-header">
+        <ul>
+            <li id="about" class="basic-padding">About</li>
+            <li id="help" class="basic-padding">Trouble</li>
+            <li id="progress" class="basic-padding">Progress</li>
+        </ul>
+    </header>
+    <main class="thick-padding containment">
+        <!-- <p>
+            With recent discussions on motto and insignia in mind, a disillusioned professor suggested black and blue
+            for the university colors.” hohw 123
+        </p> -->
+        <img id="light" src="../images/logo/uleth-sun-black.png" alt="Light Image">
+        <img id="dark" src="../images/logo/logo-convex4.png" alt="Dark Image">
+        <p id="eldritch-speak"></p>
+        <div id="overlay"></div>
+    </main>
+    <div id="header-container"></div>
+</body>
+<script>
+    function fadeImages() {
+        document.getElementById("light").style.opacity = 0;
+        document.getElementById("dark").style.opacity = 1;
+        document.getElementById("overlay").style.opacity = 1;
+        document.getElementById("overlay").style.pointerEvents = 'auto';
+    }
+    setTimeout(fadeImages, 67000);
+
+    setTimeout(() => {
+        // Array of sentences to cycle through
+        const sentences = [
+            'kill the light',
+            'set the sun',
+            'welcome night',
+            'come undone',
+            'cave to the call',
+            'bow to the beast',
+            'uhall must fall',
+            'yeuleth must feast',
+            '₮Ɇ₦Ɇ฿Ɽ₳Ɇ ₣ł₳₦₮'
+        ];
+
+        let sentenceIndex = 0;
+        // Function to simulate typing effect with cycling sentences
+        function typeCyclingText(element, sentences, speed) {
+            let charIndex = 0;
+
+            function typeCharacter() {
+                element.textContent = sentences[sentenceIndex].substring(0, charIndex);
+                charIndex++;
+
+
+                // Check if all letters in the current sentence are typed
+                if (charIndex > sentences[sentenceIndex].length) {
+                    charIndex = 0;
+                    sentenceIndex = (sentenceIndex + 1) % sentences.length;
+
+
+                    // Introduce a delay before typing the next sentence
+                    setTimeout(function () {
+                        deleteText(element);
+                    }, 2000);
+                } else {
+                    // Continue typing the current sentence
+                    setTimeout(typeCharacter, speed);
+                }
+
+            }
+
+            // Start typing with cycling sentences
+            typeCharacter();
+
+        }
+
+        // Function to delete existing text
+        function deleteText(element) {
+            // Clear the existing text instantly
+            element.textContent = '';
+
+
+            // Start typing the next sentence
+            typeCyclingText(element, sentences, 50); // Adjust the speed (milliseconds per letter)
+        }
+
+        // Get the element and start typing with cycling sentences
+        const eldritchSpeakElement = document.getElementById('eldritch-speak');
+
+        // Start typing with cycling sentences
+        typeCyclingText(eldritchSpeakElement, sentences, 50); // Adjust the speed (milliseconds per letter)
+    }, 71000);
+
+</script>
+
+</html>

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en-CAN">
+
+<head>
+    <title>Nothing to See Here...</title>
+    <link rel="icon" type="image/png" href="">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/evil.css">
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+    <script src="../js/scripts.js"></script>
+</head>
+<style>
+    * {
+        overflow-y: hidden;
+    }
+
+    body {
+        background-color: black;
+    }
+
+    .image-container {
+        width: 100vw;
+        height: 100vh;
+        /* Set width to 100% of the viewport width */
+        overflow-x: auto;
+        white-space: nowrap;
+        /* Prevent line breaks */
+        position: relative;
+    }
+
+    .image-container img {
+        display: block;
+        /* Make the image a block element */
+        width: auto;
+        /* Prevent the image from being constrained by its container */
+        height: 100vh;
+    }
+
+    svg {
+        position: absolute;
+        z-index: 100;
+        top: 0;
+        left: 0;
+    }
+
+    textPath,
+    p,
+    text {
+        fill: white;
+        font-size: 2.5vh
+    }
+
+    p {
+        z-index: 10;
+        position: relative;
+    }
+
+    #hold-words1,
+    #hold-words2 {
+        position: relative;
+        overflow: hidden;
+    }
+
+    #hold-words1 {
+        transform: perspective(1000px) rotateX(314deg) rotateY(12deg) rotateZ(21deg);
+    }
+
+
+
+    .hold-words {
+        width: auto;
+        display: block;
+    }
+
+    #progress-patch {
+        position: absolute;
+        background-color: transparent;
+        border-radius: 0%;
+        cursor: pointer;
+        z-index: 999;
+    }
+</style>
+
+</style>
+
+<body class="medium" data-group-id = "tunnel" data-page-id="hallway">
+    <main class="right-container">
+        <div class="image-container">
+            <img id="hall" src="../images/socratic2.png"
+                alt="A black and white photograph inside the 6th floor of UHall. The building is completely empty.">
+            <div id="progress-patch" onclick="window.location.href='below.html'"></div>
+            <div id="hold-words1">
+                <p class="hold-words" style=" top:0; left: 0; rotate:351deg;"></p>
+                <p class="hold-words" style=" left: 70px; rotate:353deg;">Keep going.</p>
+            </div>
+            <!-- <div id="hold-words2">
+                <p>(I wish we still used the platonic couches.)</p>
+            </div> -->
+        </div>
+    </main>
+</body>
+
+<script>
+    screen.orientation.lock('portrait');
+    document.addEventListener("DOMContentLoaded", function () {
+        const pic = document.getElementById('hall');
+        const progressPatch = document.getElementById('progress-patch');
+        const hold1 = document.getElementById('hold-words1');
+        const hold2 = document.getElementById('hold-words2');
+        const svgElement = document.querySelector('svg');
+
+        const adjustPositions = () => { // Adjust positions based on pic dimensions
+            const picHeight = pic.offsetHeight;
+            const picWidth = pic.offsetWidth;
+
+            progressPatch.style.top = `${picHeight * 0.57}px`;
+            progressPatch.style.left = `${picWidth * 0.53}px`;
+            progressPatch.style.width = `${picWidth * 0.11}px`;
+            progressPatch.style.height = `${picHeight * 0.07}px`;
+
+            hold1.style.top = `${picHeight * -0.95}px`;
+            hold1.style.left = `${picHeight * 0.05}px`;
+            hold2.style.top = `${picHeight * -0.15}px`;
+            hold2.style.left = `${picHeight * 0.8}px`;
+
+
+            //     svgElement.style.width = `${picWidth}px`;
+            //     svgElement.style.height = `${picHeight}px`;
+            //     svgElement.setAttribute('viewBox', `${picHeight * -0.95} ${picHeight * -0.05} ${picWidth} ${picHeight}`);
+
+            //     const path = document.getElementById('path'); // Selecting the path element
+            //     path.setAttribute('width', `${picHeight * 0.2}px`); // Setting width attribute
+            //     path.setAttribute('height', `${picHeight * 0.2}px`); // Setting height attribute
+            //     //works for smaller type:
+            //     path.setAttribute('d', `M ${picWidth * 0.12},${picHeight * 0.5}
+            // A ${picWidth * 0.08},${picHeight * 0.09} 0 0 1 ${picWidth * 0.257},${picHeight * 0.6}
+            // A ${picWidth * 0.08},${picHeight * 0.08} 0 0 1 ${picWidth * 0.2},${picHeight * 0.5}`);
+            //     path.setAttribute('transform', `translate(${picHeight * -0.48}, ${picHeight * -0.085})`);
+            //     path.setAttribute('fill', 'none'); // Setting fill attribute to none
+            //     path.setAttribute('stroke', 'none'); // Setting stroke attribute to white
+        };
+
+        // Call adjustPositions initially and on window resize
+        adjustPositions();
+        window.addEventListener('resize', adjustPositions);
+    });
+
+
+
+</script>
+
+</html>

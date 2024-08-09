@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en-CAN">
+
+<head>
+    <title></title>
+    <link rel="icon" type="image/png" href="">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/style.css">
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+    <script src="../js/scripts.js"></script>
+    <script src="../js/continue.js"></script>
+</head>
+<style>
+    #letter-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .letter-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 50px);
+        grid-template-rows: repeat(4, 50px);
+        gap: 10px;
+    }
+
+    .letter {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 50px;
+        height: 50px;
+        /* height: 4rem; */
+        background: var(--red-dark);
+        border: 1px solid #ccc;
+        font-family: 'AbscissaBold', 'Arial', sans-serif;
+        font-weight: bold;
+        font-size: 24px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+
+        margin-bottom: 10px;
+        z-index: 1;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.5);
+        transition: 0.5s ease-in-out;
+    }
+
+
+    /* 
+    .draggable {
+
+        font-size: 24px;
+        user-select: none;
+        cursor: move;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+       
+    } */
+
+    .letter.selected {
+        background-color: var(--green-light);
+        color: var(--lightest);
+    }
+</style>
+
+<body data-group-id="tunnel" data-page-id="4-words">
+    <header id="main-header">
+        <ul>
+            <li id="about" class="basic-padding">About</li>
+            <li id="help" class="basic-padding">Trouble</li>
+            <li id="progress" class="basic-padding">Progress</li>
+        </ul>
+    </header>
+    <main class="thick-padding containment">
+        <h1>4 Words</h1>
+        <div id="letter-cintainer">
+            <div class="letter-grid">
+                <div class="letter" data-row="1">L</div>
+                <div class="letter" data-row="1">I</div>
+                <div class="letter" data-row="1">N</div>
+                <div class="letter" data-row="1">E</div>
+
+                <div class="letter" data-row="2">V</div>
+                <div class="letter" data-row="2">E</div>
+                <div class="letter" data-row="2">I</div>
+                <div class="letter" data-row="2">L</div>
+
+                <div class="letter" data-row="3">R</div>
+                <div class="letter" data-row="3">I</div>
+                <div class="letter" data-row="3">S</div>
+                <div class="letter" data-row="3">K</div>
+
+                <div class="letter" data-row="4">I</div>
+                <div class="letter" data-row="4">D</div>
+                <div class="letter" data-row="4">L</div>
+                <div class="letter" data-row="4">E</div>
+            </div>
+        </div>
+    </main>
+    <div id="about-page" class="pop-up thick-padding">
+        <div class="wrap-pad">
+            <h2>What This Is</h2>
+            <p>You may be confused, wondering what you've stumbled upon. You may have questions. What
+                is this thing, anyway?</p>
+            <p>Reality is subjective. For me, this is my cry into the void, hoping for an echo. These are my
+                memories and my nightmares. This is my attempt against entropy and the forces that seek to destroy this
+                institution.
+            </p>
+            <p>For you, this is a game, a quest, a puzzle. An opportunity to learn, perhaps? A chance to save the
+                school.</p>
+            <h2>Playing the Game</h2>
+            <p>I have developed this interface as a secure way to pass clues and messages onto you with minimal
+                antagonistic interference. You will have to work through a number of tasks and problems to reach the
+                goal. If you become stuck, let me know, and I may be able to help further; however, you will also need
+                to seek help from other sources. Consider the entities around you who may be of use.
+            </p>
+            <h3>My Promises to You</h3>
+            <p>In accepting this challenge,</p>
+            <ol>
+                <li>You will not have to destroy property or otherwise break the law.</li>
+                <li>You will not have to spend money.</li>
+                <li>Things May Go Wrong. If this happens, alert me to it, and I will see what strings I can pull to
+                    make them right again. (See the Trouble tab for more information.) </li>
+            </ol>
+            <h2>Who I Am</h2>
+            <p>Who am I? Good question--one I often ask myself. Like all entities, I am not so much an object as I
+                am a process; I am built up and down; I am compacted, quickly. I am not myself for very long before
+                I am something new. I am prone to digression, in my words and in my being.</p>
+            <p>For this moment, I am a guide. I cannot solve the problems for you but I can help you navigate
+                them. Continue the game and I can tell you more.</p>
+        </div>
+        <div class="close-button button basic-padding">Close</div>
+    </div>
+    <div id="help-page" class="pop-up thick-padding">
+        <div class="wrap-pad">
+            <h2>Things Go Wrong</h2>
+            <p>Nefarious forces seek to impede your progress. They may interfere with our work in the form of errors
+                on
+                this website, alteration or destruction of physical clues, or any number of other problems. If you
+                believe that
+                something has gone terribly wrong, preventing you from continuing on your quest, please report it to
+                me
+                and I
+                will take hasty action to resolve it.</p>
+            <p>
+                In simpler terms, if something in this game breaks, report the problem by contacting m.rennie@uleth.ca.
+            </p>
+        </div>
+        <div class="close-button button basic-padding">Close</div>
+    </div>
+    <div id="progress-page" class="pop-up thick-padding">
+        <div class="wrap-pad">
+            <h2>Progress</h2>
+            <p id="progress-list">
+
+            </p>
+        </div>
+        <div class="close-button basic-padding">Close</div>
+    </div>
+</body>
+<script>
+    // Track selected letters and their respective rows
+    const selectedLetters = {};
+
+    // Function to check if the correct sequence of letters is selected
+    function checkSelectedSequence() {
+        // Check for the sequence "LIKE"
+        if (
+            selectedLetters['1'] === 'L' &&
+            selectedLetters['2'] === 'I' &&
+            selectedLetters['3'] === 'K' &&
+            selectedLetters['4'] === 'E'
+        ) {
+            // Play audio and redirect
+            playAudioAndRedirect("../monster/like-light.html");
+        }
+        // Check for the sequence "EVIL"
+        else if (
+            selectedLetters['1'] === 'E' &&
+            selectedLetters['2'] === 'V' &&
+            selectedLetters['3'] === 'I' &&
+            selectedLetters['4'] === 'L'
+        ) {
+            // Play audio and redirect
+            playAudioAndRedirect("../monster/evil-light.html");
+        }
+    }
+
+    // Function to play audio and redirect
+    function playAudioAndRedirect(url) {
+        // Play audio
+        var audio = new Audio('../audio/click2.mp3');
+        audio.volume = 0.7;
+        audio.play();
+
+        // Iterate over all letter elements and change background color temporarily
+        document.querySelectorAll(".letter").forEach(element => {
+            element.style.backgroundColor = 'var(--green-light)';
+            element.style.color = 'var(--dark)';
+        });
+
+        // Set timeout to revert the color change and redirect
+        setTimeout(function () {
+            document.querySelectorAll(".letter").forEach(element => {
+                element.style.backgroundColor = '';
+                element.style.color = '';
+            });
+            window.location.href = url;
+        }, 1000);
+    }
+
+    // Event listener for letter tiles
+    document.querySelectorAll('.letter').forEach(letter => {
+        letter.addEventListener('click', () => {
+            const row = letter.getAttribute('data-row');
+
+            // Deselect any previously selected letter in the same row
+            document.querySelectorAll(`.letter[data-row="${row}"]`).forEach(l => {
+                l.classList.remove('selected');
+            });
+
+            // Select the clicked letter
+            letter.classList.add('selected');
+            selectedLetters[row] = letter.textContent;
+
+            // Check if the correct sequence is selected
+            checkSelectedSequence();
+        });
+    });
+
+
+
+</script>
+
+</html>

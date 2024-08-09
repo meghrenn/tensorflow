@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en-CAN">
+
+<head>
+    <title>You've a lepidopteric deathwish.</title>
+    <link rel="icon" type="image/png" href="">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/style.css">
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+    <script src="../js/scripts.js"></script>
+    <script src="../js/continue.js"></script>
+</head>
+<style>
+    * {
+        font-family: 'Vinque', Georgia, serif;
+    }
+
+    body,
+    html {
+        min-height: 100vh;
+        min-width: 100vw;
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #ffffff;
+        overflow: hidden;
+        cursor: default;
+    }
+
+
+    main {
+        min-width: 375px;
+    }
+
+
+    #poem {
+        display: block;
+        white-space: pre-line;
+        color: #000000;
+    }
+
+    #poem p,
+    #poem a {
+        margin-bottom: 0;
+    }
+
+    #continue {
+        display: block;
+        opacity: 0;
+        transition: opacity 2s ease;
+    }
+</style>
+
+<body data-group-id="monster" data-page-id="like-light">
+    <header id="main-header">
+        <!-- <ul>
+            <li id="about" class="basic-padding">About</li>
+            <li id="help" class="basic-padding">Problems</li>
+            <li id="progress" class="basic-padding">Progress</li>
+        </ul> -->
+    </header>
+    <main class="thick-padding containment">
+        <div id="poem" class="right-container">
+            <p>Don’t fall prey to the propaganda. </p>
+            <p>You are not of the light. </p>
+            <p>The light didn't birth you.</p>
+            <p> </p>
+            <p>Still, you like the light.</p>
+            <p>Light is likeable.</p>
+            <p>You chase the spotlight,</p>
+            <p>the glow of accolades;</p>
+            <p>you celebrate with fireworks;</p>
+            <p>you broadcast your achievements</p>
+            <p>on LED screens.</p>
+            <p>It hasn’t been enough, though,</p>
+            <p>has it?</p>
+            <p> </p>
+            <p>All this time chasing light,</p>
+            <p>making light.</p>
+            <p>Have you ever considered</p>
+            <p>light might not be</p>
+            <p>what you need?</p>
+        </div>
+
+        <div class="center-container basic-padding marginal-margin">
+            <div id="continue" class="button basic-padding">Continue</div>
+        </div>
+
+
+    </main>
+    <!-- <div id="header-container"></div> -->
+    <script>
+        // Function to simulate typing effect
+        function typeText(element, text, speed) {
+            let index = 0;
+            const intervalId = setInterval(function () {
+                element.innerHTML += text[index++];
+                if (index === text.length) {
+                    clearInterval(intervalId);
+                }
+            }, speed);
+        }
+
+        // Call typeText when the page loads
+        window.addEventListener("load", function () {
+            const poemElement = document.getElementById("poem");
+            const paragraphs = poemElement.querySelectorAll("p");
+            poemElement.innerHTML = ""; // Clear the content
+
+            paragraphs.forEach((paragraph, index) => {
+                setTimeout(function () {
+                    typeText(poemElement, paragraph.textContent, 25); // Adjust speed as needed
+                    poemElement.innerHTML += "<br>"; // Add line break after each paragraph
+                }, index * 2000); // Adjust delay between paragraphs as needed
+
+                if (index === paragraphs.length - 1) {
+                    setTimeout(function () {
+                        // Replace content of #poem with the original HTML structure
+                        document.getElementById("continue").style.opacity = '1';
+                    }, index * 2000 + 1000); // Set delay after typing animation
+
+                }
+            });
+        });
+
+
+    </script>
+</body>

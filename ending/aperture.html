@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en-CAN">
+
+<head>
+    <title>Kawai'piksit</title>
+    <link rel="icon" type="image/png" href="">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/style.css">
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+    <script src="../js/scripts.js"></script>
+</head>
+<style>
+    body {
+        background-color: black;
+        display: flex;
+        flex-direction: column;
+        margin: 0;
+        padding: 0;
+        height: 100%;
+    }
+
+    img {
+        width: 100%;
+        height: auto;
+        display: block;
+        left: 0;
+        top: 0;
+    }
+
+    main {
+        top: 0;
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+    }
+
+    .centered-content {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+    }
+
+    .centred-content>* {
+        text-align: center;
+    }
+
+    #aperture-front {
+        position: absolute;
+    }
+
+    #monster {
+        position: absolute;
+        width: 70%;
+        top: 9%;
+        left: 17%;
+    }
+
+    #monster,
+    .eldritch-speak,
+    #continue {
+        display: none;
+    }
+</style>
+
+<body data-group-id="ending" data-page-id="aperture">
+
+    <img id="aperture-back" src="../images/aperture.png"
+        alt="A black-and-white image of the aperture sculpture on campus.">
+    <img id="monster" src="../images/logo/logo-convex2.png">
+    <img id="aperture-front" src="../images/aperture2.png">
+
+    <main class="right-container thick-padding">
+        <div class="centered-content">
+            <p class="eldritch-speak thick-padding">The dark. The dark loves you like no other. Like a parent leaning
+                over the edge
+                of the crib at night,
+                watching even as the newborn sleeps and does not need them. </p>
+            <p class="eldritch-speak thick-padding">I love you.</p>
+            <p class="eldritch-speak thick-padding"> Think of the shadows in the troughs between coulees. The clear
+                night sky visible
+                on the west side before anything else was built here.
+                Just the dark and the grasses. Just feeling our way by sound, by touch.</p>
+            <p class="eldritch-speak thick-padding">Think of muddled waters, of uncertain times. The darkness of
+                nebulosity and not
+                knowing. The
+                black blade of controversy
+                slashing apart reputations. The shadow that the boulder casts over Sisyphus as he toils.</p>
+            <p class="eldritch-speak thick-padding">
+                I antagonise you because I love you. I fight you because I love you. I want you to be strong.
+            </p>
+            <p id="fade-trigger" class="eldritch-speak thick-padding">The sun sets in the west. Tenebrae Fiant.</p>
+
+            <div class="center-container thick-padding marginal-margin">
+                <div id="continue" class="button basic-padding">Continue</div>
+            </div>
+        </div>
+    </main>
+
+</body>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        document.getElementById("continue").addEventListener("click", function () {
+            document.body.style.backgroundColor = 'var(--green-dark)';
+            setTimeout(function () {
+                document.body.style.backgroundColor = '';
+                window.location.href = "the-end.html";
+            }, 700);
+        });
+    });
+
+    $(document).ready(function () {
+        // Variables
+        let paragraphs = $(".eldritch-speak, #fade-trigger, #continue");
+        let currentIndex = 0;
+
+        // Initial fade-in of monster and first paragraph
+        $("#monster").fadeIn(1000, function () {
+            $(paragraphs[currentIndex]).fadeIn(1000);
+        });
+
+        // Handle click on the right side
+        $("body").click(function (e) {
+            let bodyWidth = $("body").width();
+            let clickPosition = e.pageX;
+
+            if (clickPosition > bodyWidth / 2) {
+                // Clicked on the right side
+                if (currentIndex < paragraphs.length - 1) {
+                    $(paragraphs[currentIndex]).fadeOut(500, function () {
+                        currentIndex++;
+                        $(paragraphs[currentIndex]).fadeIn(500, function () {
+                            // Check if the current element is #fade-trigger
+                            if ($(paragraphs[currentIndex - 1]).attr("id") === "fade-trigger") {
+                                $("#monster").fadeOut(250); // Fade out #monster when #fade-trigger disappears
+                            }
+                        });
+                    });
+                }
+            } else {
+                // Clicked on the left side
+                if (currentIndex > 0) {
+                    $(paragraphs[currentIndex]).fadeOut(500, function () {
+                        currentIndex--;
+                        $(paragraphs[currentIndex]).fadeIn(500, function () {
+                            // If moving backward and returning to fade-trigger, bring #monster back
+                            if ($(paragraphs[currentIndex]).attr("id") === "fade-trigger") {
+                                $("#monster").fadeIn(500); // Fade in #monster again if #fade-trigger reappears
+                            }
+                        });
+                    });
+                }
+            }
+        });
+    });
+
+
+
+</script>
+
+</html>

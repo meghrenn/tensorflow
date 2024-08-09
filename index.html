@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en-CAN">
+
+<head>
+    <title>The Adventure Begins</title>
+    <link rel="icon" type="image/png" href="">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/style.css">
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+    <script src="../js/scripts.js"></script>
+</head>
+<style>
+    body {
+        background-color: var(--darkest);
+        overflow: hidden;
+    }
+
+    p {
+        text-align: center;
+    }
+
+    @keyframes rotate-fore {
+        from {
+            transform: rotate(0deg);
+
+        }
+
+        to {
+            transform: rotate(360deg);
+
+        }
+    }
+
+    @keyframes rotate-back {
+        from {
+            transform: rotate(360deg);
+
+        }
+
+        to {
+            transform: rotate(0deg);
+
+        }
+    }
+
+
+    #layering {
+        position: relative;
+        width: 90vw;
+        height: 90vh;
+
+    }
+
+    #layering>* {
+        position: absolute;
+        top: 20%;
+        left: 0;
+        width: 90vw;
+        height: 90vw;
+        display: inline;
+        transform-origin: center;
+    }
+
+    #circle {
+        border-radius: 50%;
+        background: radial-gradient(circle, var(--light) 0%, var(--dark) 30%, var(--darkest) 65%);
+        transform: translateX(-30vw) translateY(-30vw);
+        width: 150vw;
+        height: 150vw;
+    }
+
+    #eldritch-speak {
+        top: 90% !important;
+        font-size: 15vw;
+    }
+
+
+
+    @media (orientation: landscape) {
+        #layering {
+            position: relative;
+            width: 90vh;
+            height: 90vh;
+        }
+
+        #layering>* {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 90vh;
+            height: 90vh;
+            display: inline;
+            transform-origin: center;
+        }
+
+        #circle {
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--light) 0%, var(--dark) 30%, var(--darkest) 65%);
+            transform: translateX(-30vh) translateY(-30vh);
+            width: 150vh;
+            height: 150vh;
+        }
+
+    }
+</style>
+
+<body data-group-id="monster" data-page-id="welcome">
+    <main class="basic-padding">
+        <div id=layering>
+            <div id="circle"></div>
+            <img style="animation: rotate-back 8s linear infinite;" src="../images/logo/logo-pieces-spikes.png" alt="">
+            <img style="animation: rotate-fore 16s linear infinite; opacity:75%;"
+                src="../images/logo/uleth-sun-white.png" alt="">
+            <img style="animation: rotate-back 12s linear infinite;" src="../images/logo/logo-pieces2.png" alt="">
+            <p id="eldritch-speak"></p>
+        </div>
+    </main>
+</body>
+<script>
+    // document.addEventListener('touchstart', startAudio);
+    document.addEventListener('DOMContentLoaded', function () {
+        var audio = new Audio('../audio/theme.wav');
+        audio.volume = 0.7;
+        // if (|| document.addEventListener('keydown', startAudio)) {
+        //     // Your code here
+        // }
+        document.addEventListener('click', function () {
+            audio.play();
+            document.removeEventListener('click', startAudio);
+            document.removeEventListener('touchstart', startAudio);
+            document.removeEventListener('keydown', startAudio);
+        });
+    });
+
+
+
+
+
+
+    setTimeout(() => {
+        // Array of sentences to cycle through
+        const sentences = [
+            'kill the light',
+            'set the sun',
+            'welcome night',
+            'come undone',
+            'UHALL MUST FALL',
+            'TENEBRAE FIANT',
+        ];
+
+        let sentenceIndex = 0;
+        // Function to simulate typing effect with cycling sentences
+        function typeCyclingText(element, sentences, speed) {
+            let charIndex = 0;
+
+            function typeCharacter() {
+                element.textContent = sentences[sentenceIndex].substring(0, charIndex);
+                charIndex++;
+
+
+                // Check if all letters in the current sentence are typed
+                if (charIndex > sentences[sentenceIndex].length) {
+                    charIndex = 0;
+                    sentenceIndex = (sentenceIndex + 1) % sentences.length;
+
+
+                    // Introduce a delay before typing the next sentence
+                    setTimeout(function () {
+                        deleteText(element);
+                    }, 3000); // 2000 milliseconds (2 seconds) delay
+                } else {
+                    // Continue typing the current sentence
+                    setTimeout(typeCharacter, speed);
+                }
+
+            }
+
+            // Start typing with cycling sentences
+            typeCharacter();
+
+        }
+
+        // Function to delete existing text
+        function deleteText(element) {
+            // Clear the existing text instantly
+            element.textContent = '';
+
+
+            // Start typing the next sentence
+            typeCyclingText(element, sentences, 50); // Adjust the speed (milliseconds per letter)
+        }
+
+        // Get the element and start typing with cycling sentences
+        const eldritchSpeakElement = document.getElementById('eldritch-speak');
+
+        // Start typing with cycling sentences
+        typeCyclingText(eldritchSpeakElement, sentences, 50); // Adjust the speed (milliseconds per letter)
+    }, 3000);
+
+</script>
+
+</html>

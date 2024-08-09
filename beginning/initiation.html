@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en-CAN">
+
+<head>
+    <title>Ahsa, kipona’pssit</title>
+    <!-- (Hey, get ready) -->
+    <link rel="icon" type="image/png" href="">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/style.css">
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+    <script src="../js/scripts.js"></script>
+</head>
+
+<body data-group-id="beginning" data-page-id="initiation">
+    <header id="main-header">
+        <ul>
+            <li id="about" class="basic-padding">About</li>
+            <li id="help" class="basic-padding">Trouble</li>
+            <li id="progress" class="basic-padding">Progress</li>
+        </ul>
+    </header>
+    <main class="thick-padding containment">
+        <h1>Initiation</h1>
+        <p>The visions used to visit me only in my sleep, but now they accost me likewise in the waking world. I
+            stumble through them like snow drifts, seeing without understanding, deriving nothing but a vague dread. It
+            swells in my chest and crests like a coulee. Something is terribly wrong.</p>
+
+        <p class="tangent">(A <a class="clue-text">linc</a> to the past
+            pulls taught, dragging history back up to surface.)
+        </p>
+        <p>The university is in danger and I can’t save it on my own. <a class="clue-text">I am still learning</a> how
+            to fine-tune my foresight; while I work on that, I need someone else to follow up on the leads my visions
+            produce.</p>
+        <p>Will you <a id="hint1" class="button basic-padding">help</a> me?</p>
+
+        <p class="tangent">(Asking for help is a skill you ought to learn.)</p>
+        <p>I’ve already given you hints on where to go. Find the right place on campus, then contact me for more
+            information.
+        </p>
+        <!-- <img src="..\images\1974ish.jpg"> -->
+        <form class="wrap-pad center-container" id="my-form">
+            <label for="file-pass" class="marginal-margin">Select the correct building:</label>
+            <select class="basic-padding marginal-margin" id="file-pass" name="buildings" required>
+                <option value="th">Turcotte Hall</option>
+                <option value="pe">Physical Education Building</option>
+                <option value="su">Students' Union Building</option>
+                <option value="ah">Anderson Hall</option>
+                <option value="l">Library Information Network Centre</option>
+                <option value="mh">Markin Hall</option>
+                <option value="sa">Science Academic Commons</option>
+                <option value="uh">UHall</option>
+                <option value="na">Dr. James Penny Building</option>
+                <option value="sc">Parkway Service Complex</option>
+                <option value="w">Fine Arts Wing</option>
+            </select>
+            <input class="button basic-padding marginal-margin" type="submit">
+        </form>
+    </main>
+    <div id="header-container"></div>
+</body>
+<!-- 
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        document.getElementById("my-form").addEventListener("submit", function (event) {
+            event.preventDefault(); // Prevent the form from submitting and reloading the page
+
+            // Check the entered password
+            var enteredPassword = document.getElementById("initiation-location").value;
+
+            if (enteredPassword === 'l') {
+                // Redirect to fog.html if the password is correct
+                window.location.href = "luck.html";
+            } else {
+                alert('Hmm... not what I was expecting. Try again.');
+            }
+        });
+    });
+</script> -->
+
+</html>

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en-CAN">
+
+<head>
+    <title>You've a lepidopteric deathwish.</title>
+    <link rel="icon" type="image/png" href="">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/style.css">
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+    <script src="../js/scripts.js"></script>
+    <script src="../js/continue.js"></script>
+    <style>
+        * {
+            font-family: 'Vinque', Georgia, serif;
+        }
+
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #000000;
+            color: #ffffff;
+            overflow: hidden;
+
+        }
+
+        .center-element {
+            width: 65vw;
+            font-size: 2em;
+            font-family: 'Vinque', Georgia, serif;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: absolute;
+            color: black;
+            text-shadow: 0 0 2px rgba(255, 255, 255, 0.8),
+                /* Light glow */
+                0 0 20px rgba(255, 255, 255, 0.6),
+                /* Medium glow */
+                0 0 30px rgba(255, 255, 255, 0.4),
+                /* Stronger glow */
+                0 0 40px rgba(255, 255, 255, 0.475);
+            animation: pulsate 2s infinite;
+        }
+
+        .hiding-guy {
+            FONT-SIZE: 2em;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: absolute;
+            color: black;
+        }
+
+        .flickering-element {
+            /* width: 55vw; */
+            position: absolute;
+            opacity: 0;
+
+            transition: opacity 0.5s;
+            text-shadow: 0 0 25px rgba(255, 255, 255, 0.8),
+
+                0 0 20px rgba(255, 255, 255, 0.6),
+
+                0 0 30px rgba(255, 255, 255, 0.4),
+
+                0 0 40px rgba(255, 255, 255, 0.475);
+        }
+
+        @keyframes pulsate {
+
+            0%,
+            100% {
+                text-shadow: 0 0 0px rgba(255, 255, 255, 0.8),
+                    0 0 0px rgba(255, 255, 255, 0.6),
+                    0 0 0px rgba(255, 255, 255, 0.4),
+                    0 0 0px rgba(255, 255, 255, 0.2);
+            }
+
+            /* 50% {
+                text-shadow: 0 0 10px rgba(255, 255, 255, 1),
+                    0 0 20px rgba(255, 255, 255, 0.8),
+                    0 0 30px rgba(255, 255, 255, 0.6),
+                    0 0 40px rgba(255, 255, 255, 0.4);
+            } */
+
+            50% {
+                text-shadow: 0 0 2px rgba(255, 255, 255, 0.8),
+                    0 0 10px rgba(255, 255, 255, 0.6),
+                    0 0 20px rgba(255, 255, 255, 0.4),
+                    0 0 25px rgba(255, 255, 255, 0.475);
+            }
+        }
+    </style>
+</head>
+
+<body data-group-id="monster" data-page-id="evil-light">
+    <p class="center-element">The light can be evil, too.</p>
+
+    <h1 class="hiding-guy" style="top: 5%;">"ⱠɆ₮ ₮ⱧɆⱤɆ ฿Ɇ Ⱡł₲Ⱨ₮," ₲ØĐ ĐɆ₵ⱤɆɆĐ</h1>
+    <h1 class="hiding-guy" style="top: 65%;">₳₦Đ ₮ⱧɆ ₩ØⱤⱠĐ ₩Ɇ₦₮ ฿Ⱡł₦Đ.</h1>
+
+    <div class="flickering-element" style="top: 5%; left: 20%;">Awake-and-out-of-it</div>
+    <div class="flickering-element" style="top: 10%; right: 20%;">sleep experiment</div>
+    <div class="flickering-element" style="top: 14%; left: 20%;"> methamphetamanic</div>
+    <div class="flickering-element" style="top: 20%; right: 20%;">bleach-bright lab</div>
+    <div class="flickering-element" style="top: 26%; left: 10%;">anxious attention</div>
+    <div class="flickering-element" style="top: 30%; right: 10%;">subject under scrutiny</div>
+    <div class="flickering-element" style="top: 34%; left: 20%;">all-hours fluorescence</div>
+    <div class="flickering-element" style="top: 38%; left: 50%;">UV violence twitching</div>
+    <div class="flickering-element" style="top: 55%; right: 50%;">giving the jitters</div>
+    <div class="flickering-element" style="top: 60%; left: 50%;">terrarium artificiality</div>
+    <div class="flickering-element" style="top: 64%; left: 35%;">bureaucratic propriety</div>
+    <div class="flickering-element" style="top: 70%; left: 10%;">sickly ammonia spotlight</div>
+    <div class="flickering-element" style="top: 75%; right: 5%;">blue light bending</div>
+    <div class="flickering-element" style="top: 80%; left: 30%;">circadian cycle becomes</div>
+    <div class="flickering-element" style="top: 84%; right: 10%;">a mobius strip</div>
+
+
+    <div class="center-container basic-padding marginal-margin" style="position: absolute; top: 88%;">
+        <div id="continue" class="button basic-padding">Continue</div>
+    </div>
+
+    <!-- <p>Your life runs as efficient and brilliant as a closed circuit.</p> -->
+
+
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const flickeringElements = document.querySelectorAll('.flickering-element');
+            setInterval(() => {
+                flickeringElements.forEach(element => {
+                    element.style.opacity = Math.random() > 0.5 ? '1' : '0';
+                });
+            }, 500); // Change every 500ms
+        });
+    </script>
+
+</body>
+
+</html>

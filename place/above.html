@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en-CAN">
+
+<head>
+    <title>As Above...</title>
+    <link rel="icon" type="image/png" href="">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/style.css">
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+    <script src="../js/scripts.js"></script>
+</head>
+<style>
+    body {
+        background-color: black;
+    }
+
+    .center-container {
+        height: 100vmin;
+        width: 100vmin;
+        position: relative;
+        background-image: url("../images/overhead/1956.jpg");
+        background-size: cover;
+        background-repeat: no-repeat;
+        overflow-y: hidden;
+    }
+
+    .center-container img {
+        position: fixed;
+        /* max-width: 100%;
+        max-height: 100%; */
+        height: auto;
+        opacity: 0.01;
+        transition: all 0.3s ease;
+        /* box-shadow: 0 5px 5px 2px rgba(0, 0, 0, 0.3); */
+    }
+
+    /* .center-container>*:nth-child(n+2) {
+        position: fixed;
+    } */
+</style>
+
+<body data-group-id = "place" data-page-id="above">
+    <main id="1" class="center-container">
+        <img id="2" style="translate:12vmin -16vmin;        width:65vmin; rotate:3deg;"
+            src="../images/overhead/1964-65pc.jpg">
+        <img id="3" style="translate:4.5vmin -6.5vmin; width:16vmin; rotate:4deg;" src="../images/overhead/1974ish.jpg">
+    </main>
+</body>
+<script>
+    const image1 = document.getElementById('1');
+    const image2 = document.getElementById('2');
+    const image3 = document.getElementById('3');
+    let taps = 0;
+
+    document.addEventListener('click', (event) => {
+        if (event.clientX > window.innerWidth / 2 && taps < 5) {
+            taps++;
+        } else if (event.clientX <= window.innerWidth / 2 && taps > 0) {
+            taps--;
+        }
+        console.log(taps);
+        if (taps === 0) {
+            image2.style.opacity = '0';
+            image3.style.opacity = '0';
+        } else if (taps === 1) {
+            image2.style.opacity = 'inherit';
+            image3.style.opacity = '0';
+        } else if (taps === 2) {
+            image3.style.opacity = 'inherit';
+            // image1.style.scale = '100%';
+            image2.style.scale = '100%';
+            image3.style.scale = '100%';
+            image3.style.translate = '4.5vmin -6.5vmin';
+
+            // } else if (taps === 3) {
+            //     // // image1.style.translate = '6vmin -8vmin';
+            //     // image3.style.translate = '2.25vmin -3.25vmin';
+            //     image2.style.scale = '200%';
+            //     image3.style.scale = '200%';
+
+            // image3.style.translate = '-3vmin 4vmin';
+        } else if (taps === 3) {
+            image2.style.scale = '350%';
+            image3.style.scale = '350%';
+            image3.style.translate = '-11vmin 22vmin';
+            // } else if (taps === 5) {
+            //     image3.style.scale = '500%';
+        } else if (taps === 4) {
+            image3.style.scale = '1500%';
+            image2.style.opacity = 'inherit';
+            image3.style.opacity = 'inherit';
+        }
+        else if (taps === 5) {
+            window.location.href = "../beginning/origins.html";
+        }
+    });
+
+
+</script>
+
+</html>

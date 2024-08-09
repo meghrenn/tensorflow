@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en-CAN">
+
+<head>
+    <title>Wishing for the Worm</title>
+    <link rel="icon" type="image/png" href="">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/evil.css">
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+    <script src="../js/scripts.js"></script>
+</head>
+<style>
+    * {
+        overflow-y: hidden;
+    }
+
+    body {
+        background-color: black;
+
+    }
+
+    .image-container {
+        width: 100vw;
+        height: 100vh;
+        /* Set width to 100% of the viewport width */
+        overflow-x: auto;
+        white-space: nowrap;
+        /* Prevent line breaks */
+        position: relative;
+    }
+
+    .image-container img {
+        display: block;
+        /* Make the image a block element */
+        width: auto;
+        /* Prevent the image from being constrained by its container */
+        height: 100vh;
+    }
+
+    svg {
+        position: absolute;
+        z-index: 100;
+        top: 0;
+        left: 0;
+    }
+
+    textPath,
+    p,
+    text {
+        fill: white;
+        font-size: 2.5vh
+    }
+
+    p {
+        z-index: 10;
+        position: relative;
+    }
+
+    #hold-words {
+        position: relative;
+        transform: perspective(1000px) rotateX(5deg) rotateY(42deg);
+        overflow: hidden;
+        padding: 0 120px 120px 0;
+    }
+
+    .hold-words {
+        width: auto;
+        display: block;
+    }
+
+    #progress-patch {
+        position: absolute;
+        background-color: transparent;
+        border-radius: 50%;
+        cursor: pointer;
+        z-index: 999;
+    }
+
+    /* @media (orientation: landscape) {
+        .image-container {
+            width: 100vw;
+            height: 100vh;
+        }
+
+        .image-container img {
+            width: 100vw;
+            height: auto;
+        }
+
+    } */
+</style>
+<!-- M73.2,148.6c4-6,65.5-96.8,148.6-95.6c71.3,1.2,120.8,90.3,115.1,97 -->
+
+<body class="medium" data-group-id="tunnel" data-page-id="worm">
+    <main class="right-container">
+        <div class="image-container">
+            <img id="worm" src="../images/worm1.jpg" alt="The inside of the worm; the belly of the beast.">
+            <div id="progress-patch" onclick="window.location.href='hallway.html'"></div>
+            <div id="hold-words">
+                <p class="hold-words">Return into the worm,</p>
+                <p class="hold-words" style=" left: 70px; rotate:-5deg;">the belly of the beast.</p>
+                <p class="hold-words" style="left: 120px;rotate:-8deg;">With no way out but through,</p>
+            </div>
+            <svg id="svg">
+                <path id="path" d="M 10% 25% 
+                             A 25% 25% 0 0 1 90% 25%
+                             A 25% 25% 0 0 1 10% 25%" />
+
+                <!-- <path id="curve" fill="transparent" d="M73.2,148c1-6,45.5-96.8,148.6-95.6c71.3,1.2,120.8,90.3,100,80" /> -->
+                <text>
+                    <textPath alignment-baseline="top" xlink:href="#path">
+                        where will this wormhole lead?
+                    </textPath>
+                </text>
+            </svg>
+        </div>
+    </main>
+</body>
+
+<script>
+    screen.orientation.lock('portrait');
+    document.addEventListener("DOMContentLoaded", function () {
+        const pic = document.getElementById('worm');
+        const progressPatch = document.getElementById('progress-patch');
+        const holdWords = document.getElementById('hold-words');
+        const svgElement = document.querySelector('svg');
+
+        const adjustPositions = () => { // Adjust positions based on pic dimensions
+            const picHeight = pic.offsetHeight;
+            const picWidth = pic.offsetWidth;
+
+
+            progressPatch.style.top = `${picHeight * 0.42}px`;
+            progressPatch.style.left = `${picWidth * 0.45}px`;
+            progressPatch.style.width = `${picWidth * 0.17}px`;
+            progressPatch.style.height = `${picHeight * 0.17}px`;
+
+
+            holdWords.style.top = `${picHeight * -0.55}px`;
+            holdWords.style.left = `${picHeight * 0.05}px`;
+
+
+            svgElement.style.width = `${picWidth}px`;
+            svgElement.style.height = `${picHeight}px`;
+            svgElement.setAttribute('viewBox', `${picHeight * -0.95} ${picHeight * -0.05} ${picWidth} ${picHeight}`);
+
+            const path = document.getElementById('path'); // Selecting the path element
+            path.setAttribute('width', `${picHeight * 0.2}px`); // Setting width attribute
+            path.setAttribute('height', `${picHeight * 0.2}px`); // Setting height attribute
+
+
+            //works for smaller type:
+            path.setAttribute('d', `M ${picWidth * 0.12},${picHeight * 0.5} 
+                        A ${picWidth * 0.08},${picHeight * 0.09} 0 0 1 ${picWidth * 0.257},${picHeight * 0.6} 
+                        A ${picWidth * 0.08},${picHeight * 0.08} 0 0 1 ${picWidth * 0.2},${picHeight * 0.5}`);
+            path.setAttribute('transform', `translate(${picHeight * -0.48}, ${picHeight * -0.085})`);
+
+
+            //working on bigger type:
+            // path.setAttribute('d', `M ${picWidth * 0.12},${picHeight * 0.5} 
+            //             A ${picWidth * 0.12},${picHeight * 0.11} 0 0 1 ${picWidth * 0.23},${picHeight * 0.7} 
+            //             A ${picWidth * 0.1},${picHeight * 0.02} -80 0 1 ${picWidth * 0.2},${picHeight * 0.5}`);
+            // path.setAttribute('transform', `translate(${picHeight * -0.44}, ${picHeight * -0.46})`);
+            // path.style.transformOrigin = "center";
+            // path.style.rotate = "-22deg";
+
+
+
+
+            path.setAttribute('fill', 'none'); // Setting fill attribute to none
+            path.setAttribute('stroke', 'none'); // Setting stroke attribute to white
+            // svgElement.style.top = `${ picHeight * - 1.07}px`;
+            // svgElement.style.left = `${ picHeight * 0.495 } px`;
+            // svgElement.style.height = `${ picheight * 0.856 } px`;
+            // svgElement.style.width = `${ picheight * 0.4 } px`;
+            // path.setAttribute('d', `M ${ picWidth * 0.1 },${ picHeight * 0.5 } A ${ picWidth * 0.05 },${ picHeight * 0.03 } 0 0 1 ${ picWidth * 0.25 },${ picHeight * 0.4 } A ${ picWidth * 0.1 },${ picHeight * 0.06 } 0 0 1 ${ picWidth * 0.1 },${ picHeight * 0.5 } `);
+            // path.setAttribute('d', `M ${ picWidth * 0.1 },${ picHeight * 0.5 } A ${ picWidth * 0.05 },${ picHeight * 0.03 } 0 0 1 ${ picWidth * 0.25 },${ picHeight * 0.4 } A ${ picWidth * 0.1 },${ picHeight * 0.06 } 0 0 1 ${ picWidth * 0.1 },${ picHeight * 0.5 }`); 
+
+
+
+        };
+
+        // Call adjustPositions initially and on window resize
+        adjustPositions();
+        window.addEventListener('resize', adjustPositions);
+    });
+
+</script>
+
+</html>

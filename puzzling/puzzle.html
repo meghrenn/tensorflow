@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en-CAN">
+
+<head>
+    <title>Well, This is Puzzling...</title>
+    <link rel="icon" type="image/png" href="">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/style.css">
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+    <script src="../js/scripts.js"></script>
+</head>
+<style>
+    .puzzle {
+        display: inline-block;
+        margin-top: 50px;
+        width: 90vw;
+        max-height: auto;
+    }
+
+    /* @media screen and (orientation: landscape) {
+    #puzzle {
+        width: auto;
+        max-height: 100vh;
+    }
+  }
+
+  @media screen and (orientation: portrait) {
+  } */
+</style>
+
+<body data-group-id="puzzling" data-page-id="puzzle">
+    <header id="main-header">
+        <ul>
+            <li id="about" class="basic-padding">About</li>
+            <li id="help" class="basic-padding">Problems</li>
+            <li id="progress" class="basic-padding">Progress</li>
+        </ul>
+    </header>
+    <main class="thick-padding containment">
+        <div class="basic-padding">
+            <h1>Puzzle</h1>
+            <p class="eldritch-speak">
+                The river below, the fate that belies.
+                The few in the know try to get high and dry.
+            </p>
+            <p>Yet another vision I can't parse; I'm not the well-put-together type. Scramble as I might to pick up the
+                pieces, I can never seem to get things back in order.
+            </p>
+        </div>
+        <div class="center-container">
+            <div id="puzzle"></div>
+            <!-- <iframe class="wrap-pad" style="height: 600px; max-height: 90vh" allowFullScreen="true"
+            src="https://www.jigsawexplorer.com/online-jigsaw-puzzle-player.html?frm=1&url=aHR0cHM6Ly93d3cudWxldGguY2Evc2l0ZXMvZGVmYXVsdC9maWxlcy8yMDIwLzExL3ZlcnRpY2FsLWxvZ28tZnVsbC1jb2xvdXIuanBn&color=charcoal"
+            title="Jigsaw Puzzle">Well, This Is Puzzling...</iframe> -->
+        </div>
+    </main>
+    <div id="header-container"></div>
+</body>
+<script>
+    var audio = new Audio("../audio/sweep.wav");
+    audio.playbackRate = 2;
+    audio.volume = 0.7;
+    // Puzzle adapted from Tile sliding puzzle by James Meyers on codepen: https://codepen.io/FullR/pen/zKVKwE
+    function success() {
+        puzzleSolved = true; // Set puzzleSolved to TRUE when the correct password is entered
+        document.body.style.backgroundColor = 'var(--green-dark)';
+        document.getElementById("main-header").style.backgroundColor = 'var(--green-medium)';
+        setTimeout(function () {
+            document.body.style.backgroundColor = '';
+            document.getElementById("main-header").style.backgroundColor = '';
+            window.location.href = "society.html";
+        }, 700);
+    }
+    const src = "../images/bug/vw-bug2.png";
+
+    class Puzzle {
+        constructor({ src, rows, columns, width, height }) {
+            this.src = src;
+            this.rows = rows;
+            this.columns = columns;
+            this.width = width;
+            this.height = height;
+            this.tileWidth = width / columns;
+            this.tileHeight = height / rows;
+            this.tiles = Array.from({ length: rows * columns }).map((_, i) => {
+                const x = i % columns;
+                const y = Math.floor(i / columns);
+                return {
+                    x, y,
+                    imageX: x,
+                    imageY: y,
+                    empty: false
+                };
+            });
+            this.emptyTile = last(this.tiles);
+            this.emptyTile.empty = true;
+            this.scramble();
+            this.createElements();
+        }
+
+        isPuzzleSolved() {
+            for (let i = 0; i < this.tiles.length; i++) {
+                const tile = this.tiles[i];
+                if (tile.x !== tile.imageX || tile.y !== tile.imageY) {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        slideTile(tile) {
+            const { emptyTile } = this;
+            if (!this.areTilesNeighbors(tile, emptyTile)) return;
+            this.swapTiles(tile, emptyTile);
+            this.updateTileElPosition(tile);
+            this.updateTileElPosition(emptyTile);
+
+            audio.play();
+            if (this.isPuzzleSolved()) {
+                console.log("Puzzle Solved!");
+                success();
+                // Add any additional actions you want to perform when the puzzle is solved
+            }
+        }
+
+        swapTiles(a, b) {
+            const { x: ax, y: ay } = a;
+            const { x: bx, y: by } = b;
+            a.x = bx;
+            a.y = by;
+            b.x = ax;
+            b.y = ay;
+        }
+
+        scramble() {
+            const { emptyTile } = this;
+            let last = null;
+            const isValidTile = (tile) => tile !== last && tile !== emptyTile && this.areTilesNeighbors(tile, emptyTile);
+
+            for (let i = 0; i < 1000; i++) {
+                const nextTile = last = sample(this.tiles.filter(isValidTile));
+                this.swapTiles(emptyTile, nextTile);
+            }
+        }
+
+        updateTileElPosition(tile) {
+            const { tileWidth, tileHeight } = this;
+            const { el, x, y } = tile;
+            el.style.left = `${x * tileWidth}px`;
+            el.style.top = `${y * tileHeight}px`;
+        }
+
+        areTilesNeighbors(a, b) {
+            const { x: ax, y: ay } = a;
+            const { x: bx, y: by } = b;
+            return (
+                (a !== b) &&
+                (
+                    (ax === bx && (ay === by + 1 || ay === by - 1)) ||
+                    (ay === by && (ax === bx + 1 || ax === bx - 1))
+                )
+            );
+        }
+
+        createElements() {
+            const { src, tiles, width, height, tileWidth, tileHeight } = this;
+            const tileEls = tiles.map((tile) => {
+                const { x, y, imageX, imageY, empty } = tile;
+                const tileEl = createEl("div", "tile");
+
+                Object.assign(tileEl.style, {
+                    "position": "absolute",
+                    "width": `${tileWidth}px`,
+                    "height": `${tileHeight}px`,
+                    "background-image": `url(${src})`,
+                    "background-size": `${width}px ${height}px`,
+                    "background-position": `-${imageX * tileWidth}px -${imageY * tileHeight}px`,
+                    "transition": "top 0.1s, left 0.1s",
+                    "vertical-align": "top",
+                    "cursor": "pointer"
+                });
+                if (empty) {
+                    tileEl.style.opacity = "0";
+                    tileEl.style.cursor = "default";
+                }
+
+                tileEl.addEventListener("click", this.slideTile.bind(this, tile));
+                tile.el = tileEl;
+                this.updateTileElPosition(tile);
+                return tileEl;
+            });
+
+            const puzzleEl = this.el = document.getElementById("puzzle");
+
+            Object.assign(puzzleEl.style, {
+                position: "relative",
+                width: `${width}px`,
+                height: `${height}px`
+            });
+
+            tileEls.forEach((el) => puzzleEl.appendChild(el));
+        }
+    }
+
+    function createEl(tag, ...classNames) {
+        const el = document.createElement(tag);
+        if (classNames.length) el.classList.add(...classNames);
+        return el;
+    }
+
+    function sample(arr) {
+        return arr[Math.floor(Math.random() * arr.length)];
+    }
+
+    function last(arr) {
+        return arr[arr.length - 1];
+    }
+
+    const puzzle = new Puzzle({
+        src,
+        width: window.innerWidth * 0.7,
+        height: window.innerWidth * 0.5,
+        rows: 3,
+        columns: 3
+    });
+
+    window.addEventListener('resize', function () {
+        width = window.innerWidth * 0.7 + "px";
+        height = window.innerWidth * 0.5 + "px";
+    });
+    window.addEventListener('orientationchange', function () {
+        width = window.innerWidth * 0.7 + "px";
+        height = window.innerWidth * 0.5 + "px";
+    });
+</script>
+
+</html>

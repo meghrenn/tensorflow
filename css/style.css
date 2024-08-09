@@ -1,0 +1,741 @@
+:root {
+
+    --darkest: #2d2337;
+    --darker: #31273c;
+    --darkish: #3b2f49;
+
+    --dark: #413450;
+    --medium: #4C405C;
+
+    --light: #5E5166;
+    --lightest: #706475;
+    /* --lighter: #6C5B6B; */
+    /* #625467; */
+    /* #574C63; */
+
+    --red-darker: #6C5B6B;
+    --red-dark: #7f646e;
+    --red-medium: #a47575;
+    --red-light: #de8182;
+
+    --green-dark: #6c7771;
+    --green-medium: #88a882;
+    --green-light: #b2ff9e;
+}
+
+@font-face {
+    font-family: "Abscissa";
+    src: url("../typefaces/Abscissa/Abscissa.ttf") format('truetype');
+    font-style: normal;
+    font-weight: normal;
+    /*Designer: Tepid Monkey https://www.1001freefonts.com/abscissa.font*/
+}
+
+@font-face {
+    font-family: "AbscissaBold";
+    src: local('AbscissaBold'), url("../typefaces/Abscissa/AbscissaBold.ttf") format('truetype');
+    font-style: normal;
+    font-weight: bold;
+    /*Designer: Tepid Monkey https://www.1001freefonts.com/abscissa.font*/
+}
+
+@font-face {
+    font-family: "Thunderman";
+    src: local('Thunderman'), url("../typefaces/Thunderman.ttf") format('truetype');
+    font-style: normal;
+    font-weight: normal;
+    /*Designer: Tmanfan https://www.1001freefonts.com/thunderman.font*/
+}
+
+@font-face {
+    font-family: "Hypertension";
+    src: local('Hypertension'), url("../typefaces/Hypertension.ttf") format('truetype');
+    font-style: normal;
+    font-weight: normal;
+    /*Designer: Bionic Type https://www.1001freefonts.com/hypertension.font*/
+}
+
+@font-face {
+    font-family: "Type";
+    src: local('OldNewspaperTypes'), url("../typefaces/OldNewspaperTypes.ttf") format('truetype');
+    font-style: normal;
+    font-weight: normal;
+    /*Designer: Manfred Klein https://fontsarena.com/old-newspaper-types-by-manfred-klein*/
+}
+
+@font-face {
+    font-family: "Kremlin-Orthodox-Church";
+    src: local('Kremlin-Orthodox-Church'), url("../typefaces/Eldritch/Kremlin-Orthodox-Church.ttf") format('truetype');
+    font-style: normal;
+    font-weight: normal;
+    /*Designer: Bolt Cutter Design https://www.1001freefonts.com/kremlin-orthodox-church.font*/
+}
+
+@font-face {
+    font-family: "Vinque";
+    src: local('vinque-regular'), url("../typefaces/vinque-regular.otf") format('opentype');
+    font-style: normal;
+    font-weight: normal;
+    /*Designer: Raymond Larabie https://www.1001fonts.com/vinque-font.html*/
+}
+
+
+* {
+    box-sizing: border-box;
+    border: none;
+    font-family: 'Times New Roman', Times, serif;
+    color: white;
+    transform-origin: center;
+    /* font-size: 5vw; */
+
+    ::-webkit-scrollbar {
+        display: none;
+    }
+
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
+}
+
+*:before,
+*:after {
+    box-sizing: border-box;
+    margin: 0;
+}
+
+body,
+html {
+    min-height: 100vh;
+    min-width: 100vw;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: .5s ease-in-out;
+    background-color: var(--light);
+    cursor: default;
+}
+
+html {
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+img {
+    width: 100%;
+}
+
+iframe {
+    width: 100%;
+    height: 100%;
+}
+
+
+/*PADDING AND CONTAINERS________________________________________________________________________________________________________*/
+
+
+.containment {
+    margin: 50px auto auto auto;
+    max-width: 1200px;
+    padding: 0 100px 0 100px;
+}
+
+.basic-padding {
+    padding: 10px;
+}
+
+
+
+.thick-padding {
+    padding: 10px 40px;
+}
+
+/* .tangent-padding {
+    padding: 10px 0;
+}
+
+.caption-padding {
+    padding: 0 0 25px;
+}
+
+.wrap-pad {
+    padding: 0 0 40px 0;
+} */
+
+.marginal-margin {
+    margin: 5px;
+}
+
+.center-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.right-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: right;
+    align-items: flex-start;
+}
+
+
+/*HEADER, DROP-DOWN, BUTTONS________________________________________________________________________________________________________*/
+
+
+header {
+    width: 100%;
+    top: 0;
+    transition: 0.5s ease-in-out;
+    position: fixed;
+    z-index: 5;
+    background-color: var(--dark);
+}
+
+header ul,
+#progress-list a {
+    margin: 0;
+    list-style-type: none;
+    text-decoration: none;
+    display: flex;
+    flex-wrap: wrap;
+    /* align-content:center; */
+    align-items: center;
+    padding: 0;
+    font-size: 1.2em;
+    /* font-size: 6vw; */
+}
+
+header ul {
+    justify-content: space-around;
+}
+
+header ul li {
+    width: 110px;
+    text-align: center;
+    font-family: 'Abscissa', 'Arial', sans-serif;
+    letter-spacing: 1px;
+    font-size: 1.2em;
+    /* font-size: 6vw; */
+}
+
+#header-container {
+    position: fixed;
+    height: 100vh;
+    width: 1vw;
+    margin: 50px auto auto auto;
+}
+
+
+
+
+.pop-up {
+    position: fixed;
+    top: -100%;
+    left: 50%;
+    transform: translateX(-50%);
+    max-height: 80vh;
+    width: 90vw;
+    max-width: 1000px;
+    overflow-y: auto;
+    transition: top 0.5s ease-in-out;
+    box-shadow: 0 5px 5px 2px rgba(0, 0, 0, 0.3);
+    padding-bottom: 40px;
+
+    /* position: absolute;
+    top: 100px;
+    max-width: 1000px;
+    margin: auto;
+    transform: translateY(-150%); */
+    /* Initially off-screen to the left */
+    /* transition: transform 0.5s ease; */
+    /* Add a smooth transform transition */
+    z-index: 4;
+}
+
+
+
+#about-page,
+#help-page,
+#progress-page,
+#egg-page {
+    background-color: var(--lightest);
+}
+
+#about:hover,
+#help:hover,
+#progress:hover {
+    background-color: var(--lightest);
+    /* color: var(--medium); */
+    transition: 0.3s ease-in-out;
+}
+
+.close-button:hover,
+.button:hover {
+    border: 1px solid var(--red-light);
+    background-color: var(--red-light);
+    transition: 0.3s ease-in-out;
+    -webkit-box-shadow: 0px 5px 0px var(--red-medium) !important;
+    -moz-box-shadow: 0px 5px 0px var(--red-medium) !important;
+    -ms-box-shadow: 0px 5px 0px var(--red-medium) !important;
+    -o-box-shadow: 0px 5px 0px var(--red-medium) !important;
+    box-shadow: 0px 5px 0px var(--red-medium) !important;
+}
+
+/*Button css adapted from "Pure CSS Push Buttons" by Mohit Aneja https://codepen.io/cssjockey/pen/bGbmop*/
+.close-button,
+.button {
+    position: relative;
+    top: 0px;
+    /* font-size: 6vw; */
+    font-size: 1.2em;
+    font-family: 'AbscissaBold', 'Arial', sans-serif;
+    letter-spacing: 1px;
+    display: inline-block;
+    align-content: center;
+    text-decoration: none;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    background-color: var(--medium);
+    border: 1px solid var(--medium);
+    -webkit-box-shadow: 0px 5px 0px var(--dark);
+    -moz-box-shadow: 0px 5px 0px var(--dark) !important;
+    -ms-box-shadow: 0px 5px 0px var(--dark) !important;
+    -o-box-shadow: 0px 5px 0px var(--dark) !important;
+    box-shadow: 0px 5px 0px var(--dark) !important;
+    -webkit-transition: All 250ms ease;
+    -moz-transition: All 250ms ease;
+    -o-transition: All 250ms ease;
+    -ms-transition: All 250ms ease;
+    transition: All 250ms ease;
+}
+
+.close-button.active,
+.button.active {
+    position: relative;
+    top: 5px;
+    background-color: var(--red-light);
+    -webkit-box-shadow: none !important;
+    -moz-box-shadow: none !important;
+    -ms-box-shadow: none !important;
+    -o-box-shadow: none !important;
+    box-shadow: none !important;
+    -webkit-transition: All 250ms ease;
+    -moz-transition: All 250ms ease;
+    -o-transition: All 250ms ease;
+    -ms-transition: All 250ms ease;
+    transition: All 250ms ease;
+}
+
+
+/*TEXT FORMATTING________________________________________________________________________________________________________*/
+
+
+h1,
+h2,
+h3,
+li,
+p,
+text {
+    margin: 0;
+}
+
+h1,
+h2,
+h3 {
+    padding: 0.5em 0;
+    font-family: 'Abscissa', 'Arial', sans-serif;
+    letter-spacing: 1px;
+}
+
+/* h1 {
+    font-size: 2em;
+}
+
+h2 {
+    font-size: 1.5em;
+} */
+
+p,
+text>* {
+    display: block;
+    margin-bottom: 1em;
+    color: white;
+}
+
+p {
+    font-size: 1.1em;
+}
+
+label {
+    /* font-size: 6vw; */
+    font-size: 1.2em;
+    font-family: 'Abscissa', 'Arial', sans-serif;
+    letter-spacing: 1px;
+    display: inline;
+    justify-content: right;
+}
+
+a.egg {
+    /* font-size: 5.3vw; */
+    font-size: 1.2em;
+    text-decoration: none;
+
+}
+
+#eldritch-speak,
+.eldritch-speak,
+.eldritch-speak>* {
+    font-family: 'Vinque', Georgia, serif;
+    color: white;
+    /* font-size: 10vw; */
+}
+
+#eldritch-speak {
+    position: fixed;
+    top: 80%;
+    z-index: 6;
+}
+
+.tangent,
+.tangent>* {
+    font-family: 'Times New Roman', Times, serif;
+    font-style: italic;
+    color: white;
+    /* font-size: 5vw; */
+}
+
+
+
+.above-the-clouds {
+    z-index: 3;
+    background-color: var(--lightest);
+    position: relative;
+    width: 100%;
+}
+
+.history {
+    background-image: url('../images/old-paper-tileable.jpg');
+    background-repeat: repeat;
+    background-position: center;
+}
+
+.history,
+.history>*,
+.history>*>* {
+    font-family: 'Type', Georgia, 'Times New Roman', Times, serif;
+    color: black;
+    /* font-size: 5vw; */
+}
+
+.cite {
+    text-align: right;
+}
+
+
+
+
+
+
+/*FORM FORMATTING________________________________________________________________________________________________________ */
+
+
+/* .crooked3 {
+    -ms-transform: rotate(3deg);
+    -moz-transform: rotate(3deg);
+    -webkit-transform: rotate(3deg);
+    -o-transform: rotate(3deg);
+    transform: rotate(3deg);
+} */
+
+/* #reveal {
+    opacity: 0.1;
+    transition: all 5s ease;
+    position: absolute;
+    width: 355px;
+    top: 270px;
+    left: 10px;
+} */
+
+/* #reveal:hover {
+    opacity: 1;
+} */
+
+/* form input, */
+select,
+datalist,
+textarea,
+option {
+    color: #000000;
+    font-size: 4.5vw;
+}
+
+input::placeholder {
+    color: var(--lightest);
+}
+
+input[type="submit"] {
+    display: inline-block;
+}
+
+
+/*HINTS AND PUZZLE-SOLVING________________________________________________________________________________________________________*/
+
+
+#hint-parent {
+    display: flex;
+    width: 100%;
+    gap: 10vw;
+    align-items: center;
+    justify-content: center;
+    justify-items: center;
+    margin-bottom: 1em;
+}
+
+#hint-parent>* {
+    font-weight: bold;
+}
+
+.helpful {
+    /* background-color: var(--lightest);
+    border: 1px solid var(--lightest);
+    -webkit-box-shadow: 0px 5px 0px var(--lighter) !important;
+    -moz-box-shadow: 0px 5px 0px var(--lighter) !important;
+    -ms-box-shadow: 0px 5px 0px var(--lighter) !important;
+    -o-box-shadow: 0px 5px 0px var(--lighter) !important;
+    box-shadow: 0px 5px 0px var(--lighter) !important; */
+
+    background-color: var(--red-medium);
+    border: 1px solid var(--red-medium);
+    -webkit-box-shadow: 0px 5px 0px var(--red-dark) !important;
+    -moz-box-shadow: 0px 5px 0px var(--red-dark) !important;
+    -ms-box-shadow: 0px 5px 0px var(--red-dark) !important;
+    -o-box-shadow: 0px 5px 0px var(--red-dark) !important;
+    box-shadow: 0px 5px 0px var(--red-dark) !important;
+
+    /* background-color: var(--lighter);
+    border: 1px solid var(--lighter);
+    -webkit-box-shadow: 0px 5px 0px var(--light) !important;
+    -moz-box-shadow: 0px 5px 0px var(--light) !important;
+    -ms-box-shadow: 0px 5px 0px var(--light) !important;
+    -o-box-shadow: 0px 5px 0px var(--light) !important;
+    box-shadow: 0px 5px 0px var(--light) !important; */
+    transition: 0.3s ease-in-out;
+    /* color: var(--medium); */
+}
+
+.clue-text {
+    font-weight: normal;
+    transition: all 0.3s ease;
+}
+
+b.clue-text,
+.clue-text.bold {
+    font-weight: bold;
+    color: var(--red-light);
+}
+
+.image-solution {
+    z-index: 2;
+    filter: brightness(0.25);
+    transition: filter 1s ease;
+}
+
+.solved {
+    filter: brightness(1);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    animation: glow-animation 1s infinite alternate;
+    opacity: 1;
+}
+
+
+.hidden {
+    display: none !important;
+}
+
+.opacity {
+    opacity: 0.5;
+}
+
+/* .flexy-parent {
+    display: flex;
+    height: 90vh;
+    align-items: center;
+} */
+
+
+/*ANIMATION________________________________________________________________________________________________________*/
+
+
+@keyframes glow-animation {
+    0% {
+        box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    }
+
+    100% {
+        box-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
+    }
+}
+
+@keyframes fade-in {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+
+/*SCREEN SIZE________________________________________________________________________________________________________*/
+
+
+
+@media screen and (min-width: 500px) {
+    * {
+        font-size: 1.1em;
+    }
+
+    .thick-padding {
+        padding: 20px 75px;
+    }
+
+    .close-button,
+    .button,
+    label,
+    header ul li {
+        font-size: 1.4em;
+    }
+
+    #progress-list a,
+    header ul {
+        font-size: 1em;
+    }
+
+
+
+}
+
+/* @media screen and (min-width: 1000px) {
+    header ul li {
+        font-size: 1em;
+    }
+} */
+
+
+
+
+/* @media screen and (max-width: 800px) {
+    .pop-up {
+        width: 500px;
+    }
+} */
+
+@media screen and (max-width: 500px) {
+
+
+    /* .pop-up {
+        width: 350px;
+    } */
+
+    /* 
+    .pop-up.active {
+        transform: translateY(-60px);
+
+    } */
+
+    /* .containment {
+        margin: 80px auto auto auto;
+        max-width: 300px;
+    } */
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* 
+.scene {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    margin: auto;
+    width: 300px;
+    height: 300px;
+    background: #1d1f20;
+    text-align: center;
+    overflow: hidden;
+}
+
+.magic {
+    z-index: 5;
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    
+    background-size: 300px 300px;
+    border-radius: 50%;
+} */
+
+
+
+
+
+
+
+
+/* 
+.scratch-card {
+    position: relative;
+}
+
+.scratch-image {
+    display: block;
+    width: Adjust according to your image size;
+    height: auto;
+}
+
+.scratch-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+} */
+
+#inciting {
+    opacity: 0;
+    /* Initially hidden */
+    animation: fade-in 1s forwards;
+    /* Animation for fading in */
+}
