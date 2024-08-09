@@ -22,6 +22,7 @@ limitations under the License.
 #include "mlir/Pass/Pass.h"  // from @llvm-project
 #include "mlir/Support/LLVM.h"  // from @llvm-project
 #include "mlir/Support/LogicalResult.h"  // from @llvm-project
+#include "mlir/Support/TypeID.h"  // from @llvm-project
 #include "tensorflow/compiler/mlir/tensorflow/transforms/passes.h"
 #include "tensorflow/compiler/mlir/tensorflow/transforms/shape_inference.h"
 
@@ -41,6 +42,7 @@ class ShapeInference
   ShapeInference() = default;
   explicit ShapeInference(ArrayRef<ArrayRef<int64_t>> input_shapes)
       : input_shapes_(input_shapes) {}
+  explicit ShapeInference(ArrayRef<TypeID> skip_ops) : skip_ops_(skip_ops) {}
   void runOnOperation() override {
     // Parse `input_arg_shapes_` if provided (test only)
     SmallVector<ArrayRef<int64_t>> input_shapes_vec;
@@ -57,7 +59,7 @@ class ShapeInference
     }
 
     auto failure_or_converged = InferModuleShape(
-        getOperation(), max_iterations_, /*ops_to_skip=*/{}, input_shapes_);
+        getOperation(), max_iterations_, skip_ops_, input_shapes_);
     if (failed(failure_or_converged)) return signalPassFailure();
     if (!failure_or_converged.value()) {
       getOperation().emitError()
@@ -69,12 +71,18 @@ class ShapeInference
 
  private:
   ArrayRef<ArrayRef<int64_t>> input_shapes_;
+  llvm::SmallVector<TypeID> skip_ops_;
 };
 }  // namespace
 
 std::unique_ptr<OperationPass<ModuleOp>> CreateTFShapeInferencePass(
     ArrayRef<ArrayRef<int64_t>> input_shapes) {
   return std::make_unique<ShapeInference>(input_shapes);
+}
+
+std::unique_ptr<OperationPass<ModuleOp>> CreateTFShapeInferencePass(
+    ArrayRef<TypeID> skip_ops) {
+  return std::make_unique<ShapeInference>(skip_ops);
 }
 
 }  // namespace TF

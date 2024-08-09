@@ -1381,6 +1381,7 @@ cc_library(
     deps = [
         ":common",
         ":fake_quant_utils",
+        ":tensorflow_lite",
         ":tensorflow_lite_d2s",  # buildcleaner: keep
         ":tensorflow_lite_legalize_tf",  # buildcleaner: keep
         ":tensorflow_lite_optimize",  # buildcleaner: keep
@@ -1407,6 +1408,7 @@ cc_library(
         "//tensorflow/lite/toco:toco_flags_proto_cc",
         "@llvm-project//llvm:Support",
         "@llvm-project//mlir:FuncDialect",
+        "@llvm-project//mlir:IR",
         "@llvm-project//mlir:Pass",
         "@llvm-project//mlir:Support",
         "@llvm-project//mlir:Transforms",

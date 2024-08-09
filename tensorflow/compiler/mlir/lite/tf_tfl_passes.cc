@@ -21,11 +21,14 @@ limitations under the License.
 
 #include "llvm/ADT/StringRef.h"
 #include "mlir/Dialect/Func/IR/FuncOps.h"  // from @llvm-project
+#include "mlir/IR/BuiltinOps.h"  // from @llvm-project
 #include "mlir/Pass/Pass.h"  // from @llvm-project
 #include "mlir/Pass/PassManager.h"  // from @llvm-project
 #include "mlir/Support/LLVM.h"  // from @llvm-project
+#include "mlir/Support/TypeID.h"  // from @llvm-project
 #include "mlir/Transforms/Passes.h"  // from @llvm-project
 #include "tensorflow/compiler/mlir/lite/common/tfl_pass_config.h"
+#include "tensorflow/compiler/mlir/lite/ir/tfl_ops.h"
 #include "tensorflow/compiler/mlir/lite/quantization/quantization_passes.h"
 #include "tensorflow/compiler/mlir/lite/quantization/tensorflow/passes.h"
 #include "tensorflow/compiler/mlir/lite/stablehlo/transforms/legalize_tf_xla_call_module_to_stablehlo_pass.h"
@@ -44,6 +47,41 @@ namespace mlir {
 /// Create a pass to convert from the TFExecutor to the TF control dialect.
 std::unique_ptr<OperationPass<func::FuncOp>>
 CreateTFExecutorToControlDialectConversion();
+
+namespace TFL {
+
+std::unique_ptr<OperationPass<ModuleOp>> CreateTFShapeInferencePass() {
+  return TF::CreateTFShapeInferencePass(
+      {TypeIDResolver<ReshapeOp>::resolveTypeID()});
+}
+
+void CreateTFStandardPipeline(OpPassManager& pm, bool form_clusters,
+                              bool enable_inliner) {
+  OpPassManager& func_pm = pm.nest<func::FuncOp>();
+
+  // First operates on the executor dialect:
+  // - remove dead islands.
+  // - fuse islands as much as possible.
+  // - materialize the eventual "pass-through" ops by inlining their content.
+  func_pm.addPass(tf_executor::CreateTFExecutorGraphPruningPass());
+  func_pm.addPass(tf_executor::CreateTFExecutorIslandCoarseningPass());
+  func_pm.addPass(TF::CreateMaterializePassthroughOpPass());
+  if (form_clusters) pm.addPass(TFDevice::CreateClusterFormationPass());
+
+  // Hopefully there is a single island left, or there wasn't any to begin
+  // with. We now run the optimizer which operates mostly inside islands.
+  func_pm.addPass(createCanonicalizerPass());
+  pm.addPass(CreateTFShapeInferencePass());
+  if (enable_inliner) {
+    pm.addPass(createInlinerPass());
+  }
+  pm.addPass(createSymbolDCEPass());
+  pm.addNestedPass<func::FuncOp>(TF::CreateTFOptimizePass());
+  pm.addNestedPass<func::FuncOp>(createCSEPass());
+}
+
+}  // namespace TFL
+
 }  // namespace mlir
 
 namespace tensorflow {
@@ -317,10 +355,8 @@ void AddPreVariableFreezingTFToTFLConversionPasses(
   pass_manager->addNestedPass<mlir::func::FuncOp>(
       mlir::TFL::CreateRaiseCustomOpsPass(raise_custom_ops_pass_options));
 
-  mlir::TF::StandardPipelineOptions standard_pipeline_options;
-  standard_pipeline_options.enable_inliner = false;
-  standard_pipeline_options.form_clusters = pass_config.form_clusters;
-  mlir::TF::CreateTFStandardPipeline(*pass_manager, standard_pipeline_options);
+  mlir::TFL::CreateTFStandardPipeline(*pass_manager, pass_config.form_clusters,
+                                      false);
 
   pass_manager->addNestedPass<mlir::func::FuncOp>(
       mlir::TF::CreateDeviceIndexSelectorPass());
@@ -332,7 +368,7 @@ void AddPreVariableFreezingTFToTFLConversionPasses(
     pass_manager->addPass(mlir::TF::CreateGuaranteeAllFuncsOneUsePass());
   }
   if (pass_config.shape_inference) {
-    pass_manager->addPass(mlir::TF::CreateTFShapeInferencePass());
+    pass_manager->addPass(mlir::TFL::CreateTFShapeInferencePass());
   }
 
   // Keep this pass after the shape inference pass, which couldn't do shape
@@ -400,7 +436,7 @@ void AddPostVariableFreezingTFToTFLConversionPasses(
 
   if (pass_config.shape_inference) {
     // Add a shape inference pass to optimize away the unnecessary casts.
-    pass_manager->addPass(mlir::TF::CreateTFShapeInferencePass());
+    pass_manager->addPass(mlir::TFL::CreateTFShapeInferencePass());
   }
 
   // Legalize while early to allow further constant folding.
@@ -448,7 +484,7 @@ void AddPostVariableFreezingTFToTFLConversionPasses(
   if (pass_config.emit_builtin_tflite_ops) {
     // Run shape inference after variables are converted to constants.
     if (pass_config.shape_inference) {
-      pass_manager->addPass(mlir::TF::CreateTFShapeInferencePass());
+      pass_manager->addPass(mlir::TFL::CreateTFShapeInferencePass());
     }
 
     // Force layout supported by TFLite, this will transpose the data
@@ -478,7 +514,7 @@ void AddPostVariableFreezingTFToTFLConversionPasses(
       // This also fixes the unranked shapes due to TF ops constant folding.
       // TODO(fengliuai): remove this pass if TableGen patterns have a better
       // to control the shapes for the intermediate results.
-      pass_manager->addPass(mlir::TF::CreateTFShapeInferencePass());
+      pass_manager->addPass(mlir::TFL::CreateTFShapeInferencePass());
     }
 
     // Inline function calls that left in the graph after folding functional
